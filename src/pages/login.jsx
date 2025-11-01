@@ -1,12 +1,22 @@
 import { useState } from "react";
+import axios from "axios";
 export default function LoginPage() {
 
    const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
 
-  function handleLogin(){
-    console.log("email")
-    console.log("password")
+  async function handleLogin(){
+    console.log(email)
+    console.log(password)
+    try{
+        const response = await axios.post("http://localhost:5000/users/login",{
+            email:email,
+            password:password
+        })
+        console.log(response.data)
+    }catch (error) {
+        console.log("Login error:", error.response.data);
+    }
   }
   return (
     <div className="w-full h-screen bg-[url('/up4.jpg')] bg-no-repeat bg-cover bg-center flex justify-center items-center">
