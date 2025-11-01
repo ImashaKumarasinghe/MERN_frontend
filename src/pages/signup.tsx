@@ -1,4 +1,4 @@
-export default function Signup() {
+export default function SignUpPage() {
   return (
     <div className='w-full h-screen bg-blue-100 flex justify-center items-center'>
       <div className='w-96 h-96 bg-white shadow-md rounded-md flex flex-col justify-center items-center'>
