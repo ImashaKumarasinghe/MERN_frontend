@@ -6,12 +6,9 @@ function App() {
   
 
   return (
-    <>
-      <Header />
+  <div className='w-[100px] h-[100px] bg-blue-500'>
 
-      
-    </>
-  )
+  </div>)
 }
 
 export default App
