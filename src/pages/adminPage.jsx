@@ -1,10 +1,24 @@
+import { Link } from "react-router-dom";
+
 export default function AdminPage(){
     return(
-        <div className='w-full h-screen bg-gray-100 flex justify-center items-center'>
-          <div className='w-96 h-96 bg-white shadow-md rounded-md flex flex-col justify-center items-center'>
-            <h2 className='text-2xl font-bold mb-4'>Admin Page</h2>
-            <p className='mb-4'>Welcome to the admin page!</p>
-          </div>
+        <div className='w-full h-screen flex '>
+            <div className='h-full w-[300px] flex flex-col'>
+                <Link to="/admin/users" >User </Link>
+                <Link to="/admin/products" >Product </Link>
+                <Link to="/admin/orders" >Order </Link>
+                <Link to="/admin/reviews" >Review </Link>
+            </div>
+            <div className="h-full w-[calc(100%-300px)] bg-amber-400">
+                <Routes path="/*">
+                <Route path="/products" element={<h1>Products</h1>} />
+                <Route path="/users" element={<h1>Users</h1>} />
+                <Route path="/orders" element={<h1>Orders</h1>} />
+                <Route path="/reviews" element={<h1>Reviews</h1>} />
+
+                </Routes>
+            </div>
+
         </div>
     )
 }
