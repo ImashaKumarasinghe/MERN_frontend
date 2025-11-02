@@ -75,11 +75,13 @@ export default function AdminProductPage() {
                         <table className="w-full">
                             <thead className="bg-gray-100">
                                 <tr>
-                                    <th className="px-4 py-2 text-left">#</th>
+                                    <th className="px-4 py-2 text-left">Product id</th>
                                     <th className="px-4 py-2 text-left">Name</th>
-                                    <th className="px-4 py-2 text-left">Price</th>
+                                    <th className="px-4 py-2 text-left">Image</th>
+                                    <th className="px-4 py-2 text-left">Labelled Price</th>
+                                     <th className="px-4 py-2 text-left">Price</th>
+
                                     <th className="px-4 py-2 text-left">Stock</th>
-                                    <th className="px-4 py-2 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
