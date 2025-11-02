@@ -19,6 +19,11 @@ export default function LoginPage() {
       toast.success("Login Successful! 🎉");
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
+      if (response.data.role === "admin"){
+           window.location.href = "/admin";
+      }else{
+            window.location.href = "/";
+      }
       
       
     } catch (error) {
