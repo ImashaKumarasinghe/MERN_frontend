@@ -73,38 +73,59 @@ export default function AdminProductPage() {
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-100">
-                                <tr>
-                                    <th className="px-4 py-2 text-left">Product id</th>
-                                    <th className="px-4 py-2 text-left">Name</th>
-                                    <th className="px-4 py-2 text-left">Image</th>
-                                    <th className="px-4 py-2 text-left">Labelled Price</th>
-                                     <th className="px-4 py-2 text-left">Price</th>
-
-                                    <th className="px-4 py-2 text-left">Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products.map((product, index) => (
-                                    <tr key={product._id || index} className="border-b hover:bg-gray-50">
-                                        <td className="px-4 py-2">{index + 1}</td>
-                                        <td className="px-4 py-2">{product.name || product.productName || 'N/A'}</td>
-                                        <td className="px-4 py-2">
-                                            ${product.price || product.productPrice || '0'}
-                                        </td>
-                                        <td className="px-4 py-2">{product.stock || product.quantity || '0'}</td>
-                                        <td className="px-4 py-2">
-                                            <button className="bg-yellow-500 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-600 text-sm">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+       
+          <thead className="bg-gray-100">
+            <tr>
+                <th className="px-4 py-2 text-left">Product id</th>
+                <th className="px-4 py-2 text-left">Name</th>
+                <th className="px-4 py-2 text-left">Image</th>
+                <th className="px-4 py-2 text-left">Labelled Price</th>
+                <th className="px-4 py-2 text-left">Price</th>
+                <th className="px-4 py-2 text-left">Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {products.map((product, index) => (
+                <tr key={product._id || index} className="border-b hover:bg-gray-50">
+                    {/* Product ID */}
+                    <td className="px-4 py-2">{index + 1}</td>
+                    
+                    {/* Name */}
+                    <td className="px-4 py-2">{product.name || product.productName || 'N/A'}</td>
+                    
+                    {/* Image */}
+                    <td className="px-4 py-2">
+                        {product.image || product.productImage ? (
+                            <img 
+                                src={product.image || product.productImage} 
+                                alt={product.name || 'Product'} 
+                                className="w-12 h-12 object-cover rounded"
+                            />
+                        ) : (
+                            <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                <span className="text-gray-400 text-xs">No image</span>
+                            </div>
+                        )}
+                    </td>
+                    
+                    {/* Labelled Price */}
+                    <td className="px-4 py-2">
+                        ${product.labelledPrice || product.originalPrice || '0'}
+                    </td>
+                    
+                    {/* Price */}
+                    <td className="px-4 py-2">
+                        ${product.price || product.productPrice || '0'}
+                    </td>
+                    
+                    {/* Stock */}
+                    <td className="px-4 py-2">
+                        {product.stock || product.quantity || '0'}
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
                         <div className="mt-4 text-gray-600">
                             <p>Total Products: <span className="font-bold">{products.length}</span></p>
                         </div>
