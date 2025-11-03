@@ -1,3 +1,6 @@
 export default function  TestPage(){
-    return <div>Test Page</div>
+    return <div>
+        <input type="file" />
+        <button>Upload</button>         
+    </div>
 }
