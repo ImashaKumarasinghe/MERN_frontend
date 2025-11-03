@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";  // ✅ Add this
 export default function AddProductPage(){
     return (
         <div>

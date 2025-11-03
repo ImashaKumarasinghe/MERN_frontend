@@ -5,10 +5,10 @@ import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
 import HomePage from './pages/home'
 import AdminPage from './pages/adminPage'
-
-import AdminProductPage from './pages/admin/adminProductPage'  // ✅ Correct
+import AdminProductPage from './pages/admin/adminProductPage'
+import AddProductPage from './pages/admin/addProductPage'
 import TestPage from './pages/testPage'
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
@@ -21,9 +21,13 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           
-          {/* Admin Routes */}
+          {/* ✅ Admin Routes - Nested */}
           <Route path="/admin" element={<AdminPage />}>
-            <Route path="products" element={<AdminProductPage />} />  {/* ✅ Add nested route */}
+            <Route path="products" element={<AdminProductPage />} />
+            <Route path="add-product" element={<AddProductPage />} />  {/* ✅ Fixed: nested under /admin */}
+            <Route path="users" element={<h1>Users Page</h1>} />
+            <Route path="orders" element={<h1>Orders Page</h1>} />
+            <Route path="reviews" element={<h1>Reviews Page</h1>} />
           </Route>
           
           <Route path="/test" element={<TestPage />} />
@@ -35,7 +39,3 @@ function App() {
 }
 
 export default App
-
-//https://lldezvxoqwqrjjijpadi.supabase.co
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsZGV6dnhvcXdxcmpqaWpwYWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNjAzMTUsImV4cCI6MjA3NzczNjMxNX0.YO20WIJO9_JIKe8IIbXIRYj5Lq1Urse59w7uKMTMWXw

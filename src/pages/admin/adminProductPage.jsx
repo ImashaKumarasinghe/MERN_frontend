@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";  // ✅ Added import
 
 export default function AdminProductPage() {
     const [products, setProducts] = useState([]);
@@ -54,9 +55,13 @@ export default function AdminProductPage() {
             <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">All Products</h2>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    {/* ✅ Changed button to Link component */}
+                    <Link 
+                        to="/admin/add-product" 
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+                    >
                         + Add New Product
-                    </button>
+                    </Link>
                 </div>
 
                 {loading ? (
@@ -66,9 +71,13 @@ export default function AdminProductPage() {
                 ) : products.length === 0 ? (
                     <div className="text-center py-8">
                         <p className="text-gray-600">No products found.</p>
-                        <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        {/* ✅ Changed button to Link component */}
+                        <Link 
+                            to="/admin/add-product"
+                            className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+                        >
                             Create First Product
-                        </button>
+                        </Link>
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
@@ -76,29 +85,37 @@ export default function AdminProductPage() {
        
           <thead className="bg-gray-100">
             <tr>
-                <th className="px-4 py-2 text-left">Product id</th>
+                <th className="px-4 py-2 text-left">Product ID</th>
                 <th className="px-4 py-2 text-left">Name</th>
                 <th className="px-4 py-2 text-left">Image</th>
                 <th className="px-4 py-2 text-left">Labelled Price</th>
                 <th className="px-4 py-2 text-left">Price</th>
                 <th className="px-4 py-2 text-left">Stock</th>
+                <th className="px-4 py-2 text-left">Status</th>
             </tr>
         </thead>
         <tbody>
             {products.map((product, index) => (
                 <tr key={product._id || index} className="border-b hover:bg-gray-50">
                     {/* Product ID */}
-                    <td className="px-4 py-2">{index + 1}</td>
+                    <td className="px-4 py-2">{product.productId || index + 1}</td>
                     
                     {/* Name */}
                     <td className="px-4 py-2">{product.name || product.productName || 'N/A'}</td>
                     
                     {/* Image */}
                     <td className="px-4 py-2">
-                        {product.image || product.productImage ? (
+                        {/* ✅ Fixed: Check images array first */}
+                        {product.images && product.images[0] ? (
+                            <img 
+                                src={product.images[0]} 
+                                alt={product.name || product.productName || 'Product'} 
+                                className="w-12 h-12 object-cover rounded"
+                            />
+                        ) : product.image || product.productImage ? (
                             <img 
                                 src={product.image || product.productImage} 
-                                alt={product.name || 'Product'} 
+                                alt={product.name || product.productName || 'Product'} 
                                 className="w-12 h-12 object-cover rounded"
                             />
                         ) : (
@@ -114,13 +131,30 @@ export default function AdminProductPage() {
                     </td>
                     
                     {/* Price */}
-                    <td className="px-4 py-2">
+                    <td className="px-4 py-2 font-semibold text-green-600">
                         ${product.price || product.productPrice || '0'}
                     </td>
                     
                     {/* Stock */}
                     <td className="px-4 py-2">
-                        {product.stock || product.quantity || '0'}
+                        <span className={`px-2 py-1 rounded text-xs ${
+                            (product.stock || 0) > 50 ? 'bg-green-100 text-green-800' :
+                            (product.stock || 0) > 0 ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                        }`}>
+                            {product.stock || product.quantity || '0'}
+                        </span>
+                    </td>
+                    
+                    {/* Status */}
+                    <td className="px-4 py-2">
+                        <span className={`px-2 py-1 rounded text-xs ${
+                            product.isAvailable 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-red-100 text-red-800'
+                        }`}>
+                            {product.isAvailable ? '✓ Available' : '✗ Unavailable'}
+                        </span>
                     </td>
                 </tr>
             ))}
