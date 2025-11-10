@@ -92,6 +92,7 @@ export default function AdminProductPage() {
                 <th className="px-4 py-2 text-left">Price</th>
                 <th className="px-4 py-2 text-left">Stock</th>
                 <th className="px-4 py-2 text-left">Status</th>
+                <th className="px-4 py-2 text-left">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -156,6 +157,7 @@ export default function AdminProductPage() {
                             {product.isAvailable ? '✓ Available' : '✗ Unavailable'}
                         </span>
                     </td>
+                    <td></td>
                 </tr>
             ))}
         </tbody>
