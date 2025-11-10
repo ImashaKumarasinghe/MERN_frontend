@@ -159,7 +159,9 @@ export default function AdminProductPage() {
                             {product.isAvailable ? '✓ Available' : '✗ Unavailable'}
                         </span>
                     </td>
-                    <td><div><FaTrash /> <FaEdit /></div></td>
+                    <td><div className="flex justify-center items-center w-full">
+                        <FaTrash className="text-[20px] text-red-500 cursor-pointer mx-2" /> 
+                        <FaEdit className="text-[20px] text-blue-500 cursor-pointer mx-2" /></div></td>
                 </tr>
             ))}
         </tbody>
