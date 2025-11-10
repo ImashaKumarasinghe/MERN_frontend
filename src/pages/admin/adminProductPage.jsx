@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";  // ✅ Added import
+import { FaTrash } from "react-icons/fa";  // ✅ Added import
+import { FaEdit } from "react-icons/fa";  // ✅ Added import
 
 export default function AdminProductPage() {
     const [products, setProducts] = useState([]);
@@ -157,7 +159,7 @@ export default function AdminProductPage() {
                             {product.isAvailable ? '✓ Available' : '✗ Unavailable'}
                         </span>
                     </td>
-                    <td></td>
+                    <td><div><FaTrash /> <FaEdit /></div></td>
                 </tr>
             ))}
         </tbody>
