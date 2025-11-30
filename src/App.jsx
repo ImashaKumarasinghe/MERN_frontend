@@ -4,6 +4,7 @@ import Header from './components/header'
 import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
 import HomePage from './pages/home'
+import ProductPage from './pages/client/productPage'
 import AdminPage from './pages/adminPage'
 import AdminProductPage from './pages/admin/productPage'
 import AddProductPage from './pages/admin/addProductPage'
@@ -16,17 +17,22 @@ function App() {
     <BrowserRouter>
       <div>
         <Toaster position="top-right" />
-        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           
+          {/* ✅ Client Routes */}
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/about" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">About Page</h1></div>} />
+          <Route path="/contact" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Contact Page</h1></div>} />
+          <Route path="/search" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Search Page</h1></div>} />
+          
           {/* ✅ Admin Routes - Nested */}
           <Route path="/admin" element={<AdminPage />}>
             <Route path="products" element={<AdminProductPage />} />
-            <Route path="add-product" element={<AddProductPage />} />  {/* ✅ Fixed: nested under /admin */}
-            <Route path="edit-product" element={<EditProductPage />} />  {/* Added route for editing product */}
+            <Route path="add-product" element={<AddProductPage />} />
+            <Route path="edit-product" element={<EditProductPage />} />
             <Route path="users" element={<h1>Users Page</h1>} />
             <Route path="orders" element={<h1>Orders Page</h1>} />
             <Route path="reviews" element={<h1>Reviews Page</h1>} />
