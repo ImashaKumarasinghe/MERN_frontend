@@ -7,6 +7,7 @@ import HomePage from './pages/home'
 import AdminPage from './pages/adminPage'
 import AdminProductPage from './pages/admin/productPage'
 import AddProductPage from './pages/admin/addProductPage'
+import EditProductPage from './pages/admin/editProductPage'
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast'
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/admin" element={<AdminPage />}>
             <Route path="products" element={<AdminProductPage />} />
             <Route path="add-product" element={<AddProductPage />} />  {/* ✅ Fixed: nested under /admin */}
+            <Route path="edit-product" element={<EditProductPage />} />  {/* Added route for editing product */}
             <Route path="users" element={<h1>Users Page</h1>} />
             <Route path="orders" element={<h1>Orders Page</h1>} />
             <Route path="reviews" element={<h1>Reviews Page</h1>} />
