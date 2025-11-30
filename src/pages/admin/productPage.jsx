@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";  // ✅ Added useNavigate
-import { FaTrash, FaEdit } from "react-icons/fa";  // ✅ Combined imports
+import { Link, useNavigate } from "react-router-dom";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 export default function AdminProductPage() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();  // ✅ Now properly imported
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadProducts();
@@ -15,20 +15,19 @@ export default function AdminProductPage() {
 
     const loadProducts = async () => {
         try {
-            const response = await axios. get(
-                import.meta. env.VITE_BACKEND_URL + "/api/products"
+            const response = await axios.get(
+                import.meta.env.VITE_BACKEND_URL + "/api/products"
             );
             
-            console.log("API Response:", response. data);
+            console.log("API Response:", response.data);
             
-            // ✅ Check if response.data is an array
             if (Array.isArray(response.data)) {
-                setProducts(response.data);
+                setProducts(response. data);
             } 
-            else if (response.data.products && Array.isArray(response.data.products)) {
+            else if (response.data. products && Array.isArray(response. data.products)) {
                 setProducts(response.data.products);
             } 
-            else if (response.data.data && Array.isArray(response.data. data)) {
+            else if (response.data.data && Array.isArray(response. data.data)) {
                 setProducts(response.data.data);
             } 
             else {
@@ -38,7 +37,6 @@ export default function AdminProductPage() {
             }
             
             setLoading(false);
-            toast.success("Products loaded successfully!");
             
         } catch (error) {
             console.error("Load products error:", error);
@@ -48,31 +46,37 @@ export default function AdminProductPage() {
         }
     };
 
-    // ✅ Delete product function
-    const deleteProduct = async (productId) => {
-        if (!confirm("Are you sure you want to delete this product?")) {
+    const deleteProduct = async (id) => {
+        if (! window.confirm("Are you sure you want to delete this product?")) {
             return;
         }
 
         const token = localStorage.getItem("token");
-        if (! token) {
+        if (!token) {
             toast.error("Please login first");
             return;
         }
 
         try {
+            console.log("🗑️ Deleting product with _id:", id);
+            console.log("🌐 Delete URL:", import.meta.env.VITE_BACKEND_URL + "/api/products/" + id);
+            
             await axios.delete(
-                import.meta.env. VITE_BACKEND_URL + "/api/products/" + productId,
+                import. meta.env.VITE_BACKEND_URL + "/api/products/" + id,
                 {
                     headers: {
                         Authorization: "Bearer " + token
                     }
                 }
             );
+            
+            console.log("✅ Delete successful");
             toast.success("Product deleted successfully");
-            loadProducts(); // Reload products
+            loadProducts();
         } catch (error) {
-            console.error("Delete error:", error);
+            console.error("❌ Delete error:", error);
+            console.error("❌ Error status:", error.response?.status);
+            console.error("❌ Error data:", error.response?.data);
             toast.error(error.response?.data?.message || "Failed to delete product");
         }
     };
@@ -99,7 +103,7 @@ export default function AdminProductPage() {
                     </div>
                 ) : products.length === 0 ? (
                     <div className="text-center py-8">
-                        <p className="text-gray-600">No products found. </p>
+                        <p className="text-gray-600">No products found.</p>
                         <Link 
                             to="/admin/add-product"
                             className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
@@ -125,7 +129,7 @@ export default function AdminProductPage() {
                             <tbody>
                                 {products.map((product, index) => (
                                     <tr key={product._id || index} className="border-b hover:bg-gray-50">
-                                        <td className="px-4 py-2">{product.productId || index + 1}</td>
+                                        <td className="px-4 py-2">{product. productId || index + 1}</td>
                                         <td className="px-4 py-2">{product. name || product.productName || 'N/A'}</td>
                                         
                                         <td className="px-4 py-2">
@@ -157,7 +161,7 @@ export default function AdminProductPage() {
                                         
                                         <td className="px-4 py-2">
                                             <span className={`px-2 py-1 rounded text-xs ${
-                                                product. isAvailable 
+                                                product.isAvailable 
                                                     ? 'bg-green-100 text-green-800' 
                                                     : 'bg-red-100 text-red-800'
                                             }`}>
@@ -175,7 +179,7 @@ export default function AdminProductPage() {
                                                     <FaEdit className="text-[20px]" />
                                                 </button>
                                                 <button
-                                                    onClick={() => deleteProduct(product. productId)}
+                                                    onClick={() => deleteProduct(product._id)}
                                                     className="text-red-500 hover:text-red-700 transition"
                                                     title="Delete product"
                                                 >
