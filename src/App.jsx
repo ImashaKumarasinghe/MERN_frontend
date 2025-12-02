@@ -5,6 +5,7 @@ import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
 import HomePage from './pages/home'
 import ProductPage from './pages/client/productPage'
+import ProductOverviewPage from './pages/client/productOverview'
 import AdminPage from './pages/adminPage'
 import AdminProductPage from './pages/admin/productPage'
 import AddProductPage from './pages/admin/addProductPage'
@@ -27,6 +28,7 @@ function App() {
           <Route path="/about" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">About Page</h1></div>} />
           <Route path="/contact" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Contact Page</h1></div>} />
           <Route path="/search" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Search Page</h1></div>} />
+          <Route path="/overview" element={<ProductOverviewPage />} />
           
           {/* ✅ Admin Routes - Nested */}
           <Route path="/admin" element={<AdminPage />}>
