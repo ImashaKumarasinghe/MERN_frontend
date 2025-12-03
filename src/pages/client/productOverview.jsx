@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Header from "../../components/header";
 
 export default  function ProductOverviewPage() {
 	const params = useParams();
@@ -27,7 +28,8 @@ export default  function ProductOverviewPage() {
 	}, [productId]);
 
   return (
-    <div className="bg-accent font-main">
-        this is overview page for product {JSON.stringify(productId)}
+    <div className=" font-main">
+        <Header />
+       
     </div>
   )}
