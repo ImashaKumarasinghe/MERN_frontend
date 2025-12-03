@@ -27,7 +27,7 @@ export default  function ProductOverviewPage() {
 	}, [productId]);
 
   return (
-    <div>
+    <div className="bg-accent font-main">
         this is overview page for product {JSON.stringify(productId)}
     </div>
   )}
