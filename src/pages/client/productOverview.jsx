@@ -37,7 +37,8 @@ export default function ProductOverviewPage() {
 				<div className="w-1/2  flex justify-center items-center">
                 <ImageSlider images={product.images} />
                 </div>
-				<div className="w-1/2 bg-blue-900"></div>
+				<div className="w-1/2 flex flex-col h-full">
+                </div>
 			</main>
 		</div>)}
         {status == "loading" && <Loading />}
