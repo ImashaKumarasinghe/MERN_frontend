@@ -37,7 +37,27 @@ export default function ProductOverviewPage() {
 				<div className="w-1/2  flex justify-center items-center">
                 <ImageSlider images={product.images} />
                 </div>
-				<div className="w-1/2 flex flex-col h-full">
+				<div className="w-full md:w-[50%] flex justify-center  md:h-full ">
+                    <div className="w-full md:w-[500px] md:h-[600px] flex flex-col  items-center ">
+							<h1 className="w-full hidden md:block text-center text-4xl text-secondary font-semibold">
+								{product.name}
+								{product.altNames.map((altName, index) => {
+									return (
+										<span key={index} className="text-4xl text-gray-600 ">
+											{" "}
+											{" | " + altName}
+										</span>
+									);
+								})}
+							</h1>
+                            {/* product Id */}
+							<h1 className="w-full text-center my-2 text-md text-gray-600 font-semibold">
+								{product.productId}
+							</h1>
+							<p className="w-full text-center my-2 text-md text-gray-600 font-semibold">
+								{product.description}
+							</p>
+                    </div>
                 </div>
 			</main>
 		</div>)}
