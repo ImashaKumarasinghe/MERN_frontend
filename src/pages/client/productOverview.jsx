@@ -72,6 +72,8 @@ export default function ProductOverviewPage() {
 									{product.price.toFixed(2)}
 								</span>
 							)}
+							<button>Add to Cart</button>
+							<button>Buy Now</button>
                     </div>
                 </div>
 			</main>
