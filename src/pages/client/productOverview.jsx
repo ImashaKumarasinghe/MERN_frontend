@@ -34,8 +34,9 @@ export default function ProductOverviewPage() {
 			<Header />
 			{/* main area fills remaining height and is a horizontal flex container */}
 			<main className="flex-1 flex">
-				<div className="w-1/2 bg-red-900"></div>
+				<div className="w-1/2  flex justify-center items-center">
                 <ImageSlider images={product.images} />
+                </div>
 				<div className="w-1/2 bg-blue-900"></div>
 			</main>
 		</div>)}
