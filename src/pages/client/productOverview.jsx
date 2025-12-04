@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Header from "../../components/header";
 import ImageSlider from "../../components/imageSlider";
 import Loading from "../../components/loading";
+import { addToCart, getCart } from "../../utils/cart";
 
 export default function ProductOverviewPage() {
 	const params = useParams();
@@ -72,8 +73,21 @@ export default function ProductOverviewPage() {
 									{product.price.toFixed(2)}
 								</span>
 							)}
-							<button>Add to Cart</button>
-							<button>Buy Now</button>
+							<div className="w-full flex flex-col md:flex-row gap-2 justify-center items-center mt-4">
+								<button
+									className="w-[200px] h-[50px] mx-4 cursor-pointer bg-accent text-white rounded-2xl hover:bg-accent/80 transition-all duration-300"
+									onClick={() => {
+										console.log("Old cart");
+										console.log(getCart());
+										addToCart(product, 1);
+										console.log("New cart");
+										console.log(getCart());
+									}}
+								>
+									Add to Cart
+								</button>
+								<button>Buy Now</button>
+							</div>
                     </div>
                 </div>
 			</main>
