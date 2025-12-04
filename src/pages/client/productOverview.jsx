@@ -4,15 +4,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Header from "../../components/header";
 
-export default  function ProductOverviewPage() {
+export default function ProductOverviewPage() {
 	const params = useParams();
 	const productId = params.id || params.productId || params.Id;
-	const [status, setStatus] = useState("loading"); //loading , success , error
+	const [status, setStatus] = useState("loading");
 	const [product, setProduct] = useState(null);
 	const navigate = useNavigate();
 
-
-    useEffect(() => {
+	useEffect(() => {
 		axios
 			.get(import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId)
 			.then((response) => {
@@ -27,9 +26,14 @@ export default  function ProductOverviewPage() {
 			});
 	}, [productId]);
 
-  return (
-    <div className=" font-main">
-        <Header />
-       
-    </div>
-  )}
+	return (
+		<div className="w-full min-h-screen flex flex-col">
+			<Header />
+			{/* main area fills remaining height and is a horizontal flex container */}
+			<main className="flex-1 flex">
+				<div className="w-1/2 bg-red-900"></div>
+				<div className="w-1/2 bg-blue-900"></div>
+			</main>
+		</div>
+	);
+}
