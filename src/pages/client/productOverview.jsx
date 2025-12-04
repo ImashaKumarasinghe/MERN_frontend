@@ -57,6 +57,21 @@ export default function ProductOverviewPage() {
 							<p className="w-full text-center my-2 text-md text-gray-600 font-semibold">
 								{product.description}
 							</p>
+
+                            {product.labelledPrice > product.price ? (
+								<div>
+									<span className="text-4xl mx-4 text-gray-500 line-through">
+										{product.labelledPrice.toFixed(2)}
+									</span>
+									<span className="text-4xl mx-4 font-bold text-accent">
+										{product.price.toFixed(2)}
+									</span>
+								</div>
+							) : (
+								<span className="text-4xl mx-4 font-bold text-accent">
+									{product.price.toFixed(2)}
+								</span>
+							)}
                     </div>
                 </div>
 			</main>
