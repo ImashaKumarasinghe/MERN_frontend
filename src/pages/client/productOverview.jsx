@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Header from "../../components/header";
+import ImageSlider from "../../components/imageSlider";
+import Loading from "../../components/loading";
 
 export default function ProductOverviewPage() {
 	const params = useParams();
@@ -27,13 +29,18 @@ export default function ProductOverviewPage() {
 	}, [productId]);
 
 	return (
-		<div className="w-full min-h-screen flex flex-col">
+        <> {status == "success" && (
+            <div className="w-full min-h-screen flex flex-col">
 			<Header />
 			{/* main area fills remaining height and is a horizontal flex container */}
 			<main className="flex-1 flex">
 				<div className="w-1/2 bg-red-900"></div>
+                <ImageSlider images={product.images} />
 				<div className="w-1/2 bg-blue-900"></div>
 			</main>
-		</div>
+		</div>)}
+        {status == "loading" && <Loading />}
+         </>
+		
 	);
 }
