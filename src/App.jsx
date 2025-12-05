@@ -7,6 +7,7 @@ import HomePage from './pages/home'
 import ProductPage from './pages/client/productPage'
 import ProductOverviewPage from './pages/client/productOverview'
 import CartPage from './pages/client/cart'
+import CheckoutPage from './pages/client/checkout'
 import AdminPage from './pages/adminPage'
 import AdminProductPage from './pages/admin/productPage'
 import AddProductPage from './pages/admin/addProductPage'
@@ -31,6 +32,7 @@ function App() {
           <Route path="/search" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Search Page</h1></div>} />
           <Route path="/overview/:Id" element={<ProductOverviewPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           
           {/* ✅ Admin Routes - Nested */}
           <Route path="/admin" element={<AdminPage />}>
