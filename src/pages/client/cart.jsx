@@ -1,5 +1,10 @@
+import Header from "../../components/header";
+
 export default function CartPage() {
     return (
-        <div>CartPage</div>
-    )
+        <>
+            <Header />
+            <div>CartPage</div>
+        </>
+    );
 }
