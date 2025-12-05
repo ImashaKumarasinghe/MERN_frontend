@@ -86,7 +86,18 @@ export default function ProductOverviewPage() {
 								>
 									Add to Cart
 								</button>
-								<button>Buy Now</button>
+								<button  onClick={() => {
+              navigate("/checkout", { state: { cart: [
+                { productId: product.productId,
+
+                  name: product.name,
+                  image: product.images[0],
+                  price: product.price,
+
+                  labelledPrice: product.labelledPrice,
+                  qty: 1 }
+              ] } });
+            }}>Buy Now</button>
 							</div>
                     </div>
                 </div>

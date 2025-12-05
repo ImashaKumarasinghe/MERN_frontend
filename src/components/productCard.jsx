@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ product }) {
   // Defensive defaults for numeric fields to avoid runtime errors
+ 
   const price = Number(product?.price) || 0;
   const labelledPrice = Number(product?.labelledPrice) || price;
 
@@ -50,6 +52,7 @@ export default function ProductCard({ product }) {
           <button
             disabled={!product?.isAvailable || (Number(product?.stock) || 0) <= 0}
             className="px-3 py-1 text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 transition"
+           
           >
             {product?.isAvailable && (Number(product?.stock) || 0) > 0 ? 'Buy Now' : 'Unavailable'}
           </button>
