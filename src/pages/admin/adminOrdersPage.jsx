@@ -9,6 +9,7 @@ export default function AdminOrdersPage() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeOrder, setActiveOrder] = useState(-1);
    
     
     useEffect(() => {
@@ -76,7 +77,8 @@ export default function AdminOrdersPage() {
                                 contentLabel="Example Modal">
 
                                 <div className="w-full h-full border 2 border-accent rounded-lg p-6 ">
-                                    
+                                    {JSON.stringify(orders[activeOrder])}
+
                                 </div>
                             </Modal>
 
@@ -103,7 +105,7 @@ export default function AdminOrdersPage() {
                                         </tr>
                                     ) : (
                                         orders.map((order, index) => (
-                                            <tr  onClick={(  ) => setIsModalOpen(true)} key={order._id || index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                                            <tr onClick={() => { setActiveOrder(index); setIsModalOpen(true); }} key={order._id || index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                                                 <td className="px-6 py-4 text-base md:text-sm text-[#432323]">{order._id}</td>
                                                 <td className="px-6 py-4 text-base md:text-sm text-gray-700">{order.name}</td>
                                                 <td className="px-6 py-4 text-base md:text-sm text-gray-600">{order.email}</td>
