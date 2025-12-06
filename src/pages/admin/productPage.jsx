@@ -4,10 +4,13 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
+
+
 export default function AdminProductPage() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+     
 
     useEffect(() => { loadProducts(); }, []);
 
@@ -63,6 +66,7 @@ export default function AdminProductPage() {
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
+                          
                         <table className="w-full text-[17px] border-separate border-spacing-y-2">
 
                             {/* Table Header */}
@@ -83,6 +87,7 @@ export default function AdminProductPage() {
                             <tbody>
                                 {products.map((product, index) => (
                                     <tr
+                                       
                                         key={product._id || index}
                                         className="bg-white shadow-md rounded-xl"
                                     >

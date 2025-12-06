@@ -2,10 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import Loading from "../../components/loading";
+import Modal from "react-modal";
+
 
 export default function AdminOrdersPage() {
     const [orders, setOrders] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); 
+    const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+   
     
     useEffect(() => {
         if (isLoading) {
@@ -64,7 +68,14 @@ export default function AdminOrdersPage() {
                             <Loading />
                         </div>
                     ) : (
-                        <div className="overflow-x-auto">
+                        <div className="overflow-x-auto"> <Modal
+                                isOpen={isModalOpen}
+                                onAfterOpen={(  ) => {} }
+                                onRequestClose={(  ) => setIsModalOpen(false)}
+                               
+                                contentLabel="Example Modal"
+                            ></Modal>
+
                             <table className="w-full min-w-[900px]">
                                 <thead className="bg-[#F9E6ED] text-[#7A4669]">
                                     <tr>
@@ -88,7 +99,7 @@ export default function AdminOrdersPage() {
                                         </tr>
                                     ) : (
                                         orders.map((order, index) => (
-                                            <tr key={order._id || index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                                            <tr  onClick={(  ) => setIsModalOpen(true)} key={order._id || index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                                                 <td className="px-6 py-4 text-base md:text-sm text-[#432323]">{order._id}</td>
                                                 <td className="px-6 py-4 text-base md:text-sm text-gray-700">{order.name}</td>
                                                 <td className="px-6 py-4 text-base md:text-sm text-gray-600">{order.email}</td>
