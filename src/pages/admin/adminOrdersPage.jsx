@@ -73,8 +73,12 @@ export default function AdminOrdersPage() {
                                 onAfterOpen={(  ) => {} }
                                 onRequestClose={(  ) => setIsModalOpen(false)}
                                
-                                contentLabel="Example Modal"
-                            ></Modal>
+                                contentLabel="Example Modal">
+
+                                <div className="w-full h-full border 2 border-accent rounded-lg p-6 ">
+                                    
+                                </div>
+                            </Modal>
 
                             <table className="w-full min-w-[900px]">
                                 <thead className="bg-[#F9E6ED] text-[#7A4669]">
