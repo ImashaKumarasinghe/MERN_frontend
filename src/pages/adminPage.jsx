@@ -1,60 +1,116 @@
-import { Link, Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
-
-export default function AdminPage() {
+export default function AdminDashboard() {
     const navigate = useNavigate();
-    const location = useLocation();
-	const path = location.pathname;
+    const { pathname } = useLocation();
 
-    const handleLogout = () => {
+    const isActive = (route) =>
+        pathname.includes(route)
+            ? "bg-[#F8D4E2] text-[#4B2A3A] font-semibold shadow-md"
+            : "text-white/80";
+
+    const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/login");
     };
-    function getClass(name) {
-		if (path.includes(name)) {
-			return "bg-accent text-white p-4";
-		} else {
-			return "text-accent p-4";
-		}
-	}
 
     return (
-        <div className='w-full h-screen flex'>
-            {/* Sidebar */}
-            <div className='h-full w-[300px] flex flex-col bg-gray-800 text-white p-4'>
-                <h2 className='text-2xl font-bold mb-6 text-center'>Admin Panel</h2>
-                
-                {/* ✅ Removed Add Product button from here */}
-                <Link  className={getClass("products")} to="/admin/products" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
-                    📦 Products
-                </Link>
-                <Link  className={getClass("users")} to="/admin/users" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
-                    👥 Users
-                </Link>
-                <Link  className={getClass("orders")} to="/admin/orders" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
-                    🛒 Orders
-                </Link>
-                <Link  className={getClass("reviews")} to="/admin/reviews" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
-                    ⭐ Reviews
-                </Link>
-                
-                <div className="mt-auto">
-                    <button 
-                        onClick={handleLogout}
-                        className='w-full py-2 px-4 bg-red-600 hover:bg-red-700 rounded'
-                    >
-                        🚪 Logout
-                    </button>
-                </div>
-            </div>
+        <div className="w-full h-screen flex font-[Poppins] bg-[#F9F5F7] text-[#3D2A34]">
 
-            {/* Main Content Area */}
-            <div className="h-full w-[calc(100%-300px)] bg-gray-100 p-8 overflow-y-auto">
-                <Outlet />
-            </div>
+            {/* Sidebar */}
+            <aside className="
+                w-[280px] 
+                bg-gradient-to-b from-[#8E4A72] to-[#2D1A25]
+                p-7 shadow-2xl flex flex-col rounded-r-3xl
+            ">
+                <h1 className="
+                    text-3xl 
+                    font-[Playfair] 
+                    text-[#F9DCE5]
+                    mb-12 
+                    text-center 
+                    tracking-wide 
+                    drop-shadow-md
+                ">
+                     Admin Panel
+                </h1>
+
+                <nav className="flex flex-col gap-4 text-lg">
+                    <Link
+                        to="/admin/products"
+                        className={`
+                            px-5 py-3 rounded-xl
+                            transition-all duration-300
+                            hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
+                            ${isActive("products")}
+                        `}
+                    >
+                        📦 Manage Products
+                    </Link>
+
+                    <Link
+                        to="/admin/users"
+                        className={`
+                            px-5 py-3 rounded-xl
+                            transition-all duration-300
+                            hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
+                            ${isActive("users")}
+                        `}
+                    >
+                        👥 Users
+                    </Link>
+
+                    <Link
+                        to="/admin/orders"
+                        className={`
+                            px-5 py-3 rounded-xl
+                            transition-all duration-300
+                            hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
+                            ${isActive("orders")}
+                        `}
+                    >
+                        🛒 Orders
+                    </Link>
+
+                    <Link
+                        to="/admin/reviews"
+                        className={`
+                            px-5 py-3 rounded-xl
+                            transition-all duration-300
+                            hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
+                            ${isActive("reviews")}
+                        `}
+                    >
+                        ⭐ Reviews
+                    </Link>
+                </nav>
+
+                <button
+                    onClick={logout}
+                    className="
+                        mt-auto 
+                        bg-red-500 
+                        text-white 
+                        w-full py-3 
+                        rounded-xl 
+                        hover:bg-red-600 
+                        transition-all 
+                        duration-300 
+                        text-lg 
+                        shadow-md
+                    "
+                >
+                    🚪 Logout
+                </button>
+            </aside>
+
+            {/* Main Content */}
+            <main className="flex-1 p-14 overflow-y-auto">
+                <div className="bg-white shadow-xl rounded-3xl p-10 min-h-[88vh]">
+                    <Outlet />
+                </div>
+            </main>
         </div>
     );
 }

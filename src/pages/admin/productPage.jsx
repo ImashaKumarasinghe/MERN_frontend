@@ -9,191 +9,169 @@ export default function AdminProductPage() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        loadProducts();
-    }, []);
+    useEffect(() => { loadProducts(); }, []);
 
     const loadProducts = async () => {
         try {
-            const response = await axios.get(
-                import.meta.env.VITE_BACKEND_URL + "/api/products"
-            );
-            
-            console.log("API Response:", response.data);
-            
-            if (Array.isArray(response.data)) {
-                setProducts(response. data);
-            } 
-            else if (response.data. products && Array.isArray(response. data.products)) {
-                setProducts(response.data.products);
-            } 
-            else if (response.data.data && Array.isArray(response. data.data)) {
-                setProducts(response.data.data);
-            } 
-            else {
-                console.error("Unexpected response format:", response.data);
-                setProducts([]);
-                toast.error("Unexpected data format from server");
-            }
-            
-            setLoading(false);
-            
-        } catch (error) {
-            console.error("Load products error:", error);
+            const res = await axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products");
+            setProducts(res.data?.products || res.data || []);
+        } catch {
             toast.error("Failed to load products");
-            setProducts([]);
+        } finally {
             setLoading(false);
         }
     };
 
     const deleteProduct = async (id) => {
-        if (! window.confirm("Are you sure you want to delete this product?")) {
-            return;
-        }
-
-        const token = localStorage.getItem("token");
-        if (!token) {
-            toast.error("Please login first");
-            return;
-        }
+        if (!confirm("Delete this product?")) return;
 
         try {
-            console.log("🗑️ Deleting product with _id:", id);
-            console.log("🌐 Delete URL:", import.meta.env.VITE_BACKEND_URL + "/api/products/" + id);
-            
-            await axios.delete(
-                import. meta.env.VITE_BACKEND_URL + "/api/products/" + id,
-                {
-                    headers: {
-                        Authorization: "Bearer " + token
-                    }
-                }
-            );
-            
-            console.log("✅ Delete successful");
-            toast.success("Product deleted successfully");
+            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`, {
+                headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+            });
+
+            toast.success("Product deleted");
             loadProducts();
-        } catch (error) {
-            console.error("❌ Delete error:", error);
-            console.error("❌ Error status:", error.response?.status);
-            console.error("❌ Error data:", error.response?.data);
-            toast.error(error.response?.data?.message || "Failed to delete product");
+        } catch {
+            toast.error("Delete failed");
         }
     };
 
     return (
-        <div className="w-full p-6">
-            <h1 className="text-3xl font-bold mb-6">Product Management</h1>
-            
-            <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-semibold">All Products</h2>
-                    <Link 
-                        to="/admin/add-product" 
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+        <div className="w-full font-[Poppins]">
+
+            {/* Header Section */}
+            <div className="bg-white shadow-lg rounded-2xl p-8 border border-[#EDD9E3]">
+                <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-4xl font-[Playfair] text-[#7A4669] tracking-wide">
+                         Product Management
+                    </h2>
+
+                    <Link
+                        to="/admin/add-product"
+                        className="bg-[#E4A6B7] px-6 py-3 text-[#2A1E28] text-lg font-semibold rounded-xl shadow hover:opacity-90 transition-all"
                     >
                         + Add New Product
                     </Link>
                 </div>
 
+                {/* Loading */}
                 {loading ? (
-                    <div className="text-center py-8">
-                        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-                        <p className="text-gray-600 mt-4">Loading products...</p>
-                    </div>
-                ) : products.length === 0 ? (
-                    <div className="text-center py-8">
-                        <p className="text-gray-600">No products found.</p>
-                        <Link 
-                            to="/admin/add-product"
-                            className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
-                        >
-                            Create First Product
-                        </Link>
+                    <div className="text-center py-10">
+                        <div className="h-12 w-12 border-4 border-[#E4A6B7] border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-[#7A4669] mt-4 text-lg">Loading products…</p>
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="bg-gray-100">
-                                <tr>
-                                    <th className="px-4 py-2 text-left">Product ID</th>
-                                    <th className="px-4 py-2 text-left">Name</th>
-                                    <th className="px-4 py-2 text-left">Image</th>
-                                    <th className="px-4 py-2 text-left">Labelled Price</th>
-                                    <th className="px-4 py-2 text-left">Price</th>
-                                    <th className="px-4 py-2 text-left">Stock</th>
-                                    <th className="px-4 py-2 text-left">Status</th>
-                                    <th className="px-4 py-2 text-center">Actions</th>
+                        <table className="w-full text-[17px] border-separate border-spacing-y-2">
+
+                            {/* Table Header */}
+                            <thead>
+                                <tr className="bg-[#F9E6ED] text-[#7A4669] text-lg">
+                                    <th className="p-4 rounded-l-xl">Product ID</th>
+                                    <th className="p-4">Name</th>
+                                    <th className="p-4">Image</th>
+                                    <th className="p-4">Labelled Price</th>
+                                    <th className="p-4">Price</th>
+                                    <th className="p-4">Stock</th>
+                                    <th className="p-4">Status</th>
+                                    <th className="p-4 rounded-r-xl text-center">Actions</th>
                                 </tr>
                             </thead>
+
+                            {/* Table Rows */}
                             <tbody>
                                 {products.map((product, index) => (
-                                    <tr key={product._id || index} className="border-b hover:bg-gray-50">
-                                        <td className="px-4 py-2">{product. productId || index + 1}</td>
-                                        <td className="px-4 py-2">{product. name || product.productName || 'N/A'}</td>
-                                        
-                                        <td className="px-4 py-2">
-                                            {product.images && product.images[0] ? (
-                                                <img 
-                                                    src={product.images[0]} 
-                                                    alt={product.name || 'Product'} 
-                                                    className="w-12 h-12 object-cover rounded"
+                                    <tr
+                                        key={product._id || index}
+                                        className="bg-white shadow-md rounded-xl"
+                                    >
+                                        <td className="p-4 font-semibold text-[#2A1E28]">
+                                            {product.productId || index + 1}
+                                        </td>
+
+                                        <td className="p-4 font-semibold text-[#7A4669]">
+                                            {product.name || product.productName || "N/A"}
+                                        </td>
+
+                                        <td className="p-4">
+                                            {product.images?.[0] ? (
+                                                <img
+                                                    src={product.images[0]}
+                                                    alt="Product"
+                                                    className="w-14 h-14 rounded-lg object-cover border border-[#EBD3DB]"
                                                 />
                                             ) : (
-                                                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
-                                                    <span className="text-gray-400 text-xs">No image</span>
+                                                <div className="w-14 h-14 bg-gray-200 rounded-lg flex items-center justify-center text-xs text-gray-500">
+                                                    No Image
                                                 </div>
                                             )}
                                         </td>
-                                        
-                                        <td className="px-4 py-2">${product.labelledPrice || '0'}</td>
-                                        <td className="px-4 py-2 font-semibold text-green-600">${product.price || '0'}</td>
-                                        
-                                        <td className="px-4 py-2">
-                                            <span className={`px-2 py-1 rounded text-xs ${
-                                                (product.stock || 0) > 50 ? 'bg-green-100 text-green-800' :
-                                                (product.stock || 0) > 0 ? 'bg-yellow-100 text-yellow-800' :
-                                                'bg-red-100 text-red-800'
-                                            }`}>
-                                                {product.stock || '0'}
+
+                                        <td className="p-4 text-[#7A4669] font-semibold">
+                                            ${product.labelledPrice || "0"}
+                                        </td>
+
+                                        <td className="p-4 text-[#2A1E28] font-bold">
+                                            ${product.price || "0"}
+                                        </td>
+
+                                        <td className="p-4">
+                                            <span
+                                                className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+                                                    product.stock > 50
+                                                        ? "bg-green-100 text-green-700"
+                                                        : product.stock > 0
+                                                        ? "bg-yellow-100 text-yellow-700"
+                                                        : "bg-red-100 text-red-700"
+                                                }`}
+                                            >
+                                                {product.stock}
                                             </span>
                                         </td>
-                                        
-                                        <td className="px-4 py-2">
-                                            <span className={`px-2 py-1 rounded text-xs ${
-                                                product.isAvailable 
-                                                    ? 'bg-green-100 text-green-800' 
-                                                    : 'bg-red-100 text-red-800'
-                                            }`}>
-                                                {product.isAvailable ? '✓ Available' : '✗ Unavailable'}
+
+                                        <td className="p-4">
+                                            <span
+                                                className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+                                                    product.isAvailable
+                                                        ? "bg-green-100 text-green-700"
+                                                        : "bg-red-100 text-red-700"
+                                                }`}
+                                            >
+                                                {product.isAvailable ? "Available" : "Unavailable"}
                                             </span>
                                         </td>
-                                        
-                                        <td className="px-4 py-2">
-                                            <div className="flex justify-center items-center gap-3">
+
+                                        <td className="p-4">
+                                            <div className="flex justify-center gap-4">
+                                                {/* Edit */}
                                                 <button
-                                                    onClick={() => navigate("/admin/edit-product", { state: product })}
-                                                    className="text-blue-500 hover:text-blue-700 transition"
-                                                    title="Edit product"
+                                                    onClick={() =>
+                                                        navigate("/admin/edit-product", { state: product })
+                                                    }
+                                                    className="text-[#E4A6B7] hover:text-[#7A4669] transition text-[22px]"
                                                 >
-                                                    <FaEdit className="text-[20px]" />
+                                                    <FaEdit />
                                                 </button>
+
+                                                {/* Delete */}
                                                 <button
                                                     onClick={() => deleteProduct(product._id)}
-                                                    className="text-red-500 hover:text-red-700 transition"
-                                                    title="Delete product"
+                                                    className="text-[#E45A68] hover:text-red-800 transition text-[22px]"
                                                 >
-                                                    <FaTrash className="text-[20px]" />
+                                                    <FaTrash />
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
+
                         </table>
-                        <div className="mt-4 text-gray-600">
-                            <p>Total Products: <span className="font-bold">{products.length}</span></p>
-                        </div>
+
+                        <p className="mt-6 text-[#7A4669] text-lg font-semibold">
+                            Total Products: {products.length}
+                        </p>
                     </div>
                 )}
             </div>
