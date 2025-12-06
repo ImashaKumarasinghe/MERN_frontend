@@ -48,7 +48,7 @@ export default function CheckoutPage() {
 			phone: phoneNumber,
 			address: address,
 		};
-
+//read cart details
 		for (let i = 0; i < cart.length; i++) {
 			const item = {
 				productId: cart[i].productId,
