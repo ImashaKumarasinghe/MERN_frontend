@@ -20,27 +20,30 @@ export default function AdminDashboard() {
 
             {/* Sidebar */}
             <aside className="
-                w-[280px] 
+                w-[320px]  /* Reduced width */
                 bg-gradient-to-b from-[#8E4A72] to-[#2D1A25]
-                p-7 shadow-2xl flex flex-col rounded-r-3xl
+                p-5         /* Slightly reduced padding */
+                shadow-2xl 
+                flex flex-col 
+                rounded-r-3xl
             ">
                 <h1 className="
                     text-3xl 
                     font-[Playfair] 
                     text-[#F9DCE5]
-                    mb-12 
+                    mb-10 
                     text-center 
                     tracking-wide 
                     drop-shadow-md
                 ">
-                     Admin Panel
+                    Admin Panel
                 </h1>
 
-                <nav className="flex flex-col gap-4 text-lg">
+                <nav className="flex flex-col gap-3 text-lg">
                     <Link
                         to="/admin/products"
                         className={`
-                            px-5 py-3 rounded-xl
+                            px-4 py-2 rounded-xl
                             transition-all duration-300
                             hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
                             ${isActive("products")}
@@ -52,7 +55,7 @@ export default function AdminDashboard() {
                     <Link
                         to="/admin/users"
                         className={`
-                            px-5 py-3 rounded-xl
+                            px-4 py-2 rounded-xl
                             transition-all duration-300
                             hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
                             ${isActive("users")}
@@ -64,7 +67,7 @@ export default function AdminDashboard() {
                     <Link
                         to="/admin/orders"
                         className={`
-                            px-5 py-3 rounded-xl
+                            px-4 py-2 rounded-xl
                             transition-all duration-300
                             hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
                             ${isActive("orders")}
@@ -76,7 +79,7 @@ export default function AdminDashboard() {
                     <Link
                         to="/admin/reviews"
                         className={`
-                            px-5 py-3 rounded-xl
+                            px-4 py-2 rounded-xl
                             transition-all duration-300
                             hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
                             ${isActive("reviews")}
@@ -106,7 +109,7 @@ export default function AdminDashboard() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-14 overflow-y-auto">
+            <main className="flex-1 p-12 overflow-y-auto">
                 <div className="bg-white shadow-xl rounded-3xl p-10 min-h-[88vh]">
                     <Outlet />
                 </div>
