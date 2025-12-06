@@ -16,8 +16,6 @@ export default function EditProductPage() {
 	const [stock, setStock] = useState(location.state.stock);
     const navigate = useNavigate()
     
-    
-
     console.log(location)
 
 	async function updateProduct() {
@@ -70,94 +68,147 @@ export default function EditProductPage() {
 		}
 	}
 	return (
-		<div className="w-full h-full flex flex-col justify-center items-center">
-            <h1 className="text-3xl font-bold mb-4">Edit Product</h1>
-			<input
-				type="text"
-                disabled
-				placeholder="Product ID"
-				className="input input-bordered w-full max-w-xs"
-				value={productId}
-				onChange={(e) => {
-					setProductId(e.target.value);
-				}}
-			/>
-			<input
-				type="text"
-				placeholder="Name"
-				className="input input-bordered w-full max-w-xs"
-				value={name}
-				onChange={(e) => {
-					setName(e.target.value);
-				}}
-			/>
-			<input
-				type="text"
-				placeholder="Alt Names"
-				className="input input-bordered w-full max-w-xs"
-				value={altNames}
-				onChange={(e) => {
-					setAltNames(e.target.value);
-				}}
-			/>
-			<input
-				type="text"
-				placeholder="Description"
-				className="input input-bordered w-full max-w-xs"
-				value={description}
-				onChange={(e) => {
-					setDescription(e.target.value);
-				}}
-			/>
-			<input
-				type="file"
-				placeholder="Images"
-				multiple
-				className="input input-bordered w-full max-w-xs"
-				onChange={(e) => {
-					setImages(e.target.files);
-				}}
-			/>
-			<input
-				type="number"
-				placeholder="Labelled Price"
-				className="input input-bordered w-full max-w-xs"
-				value={labelledPrice}
-				onChange={(e) => {
-					setLabelledPrice(e.target.value);
-				}}
-			/>
-			<input
-				type="number"
-				placeholder="Price"
-				className="input input-bordered w-full max-w-xs"
-				value={price}
-				onChange={(e) => {
-					setPrice(e.target.value);
-				}}
-			/>
-			<input
-				type="number"
-				placeholder="Stock"
-				className="input input-bordered w-full max-w-xs"
-				value={stock}
-				onChange={(e) => {
-					setStock(e.target.value);
-				}}
-			/>
-			<div className="w-full flex justify-center flex-row items-center mt-4">
-				<Link
-					to="/admin/products"
-					className="bg-red-500 text-white font-bold py-2 px-4 rounded mr-4"
-				>
-					Cancel
-				</Link>
-				<button
-					className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-					onClick={updateProduct}
-				>
-					Update Product
-				</button>
+		<div className="w-full font-sans flex justify-center py-10">
+			<div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8 border border-[#e6c4d3]">
+				<header className="mb-6 flex items-start justify-between">
+					<div>
+						<h1 className="text-3xl font-bold text-[#6a2c4b]">Edit Product</h1>
+						<p className="text-sm text-gray-500 mt-1">Modify product details and images</p>
+					</div>
+					<div className="text-sm text-gray-600">
+						<span className="font-semibold text-[#6a2c4b]">ID:</span> <span className="ml-2 text-gray-700">{productId}</span>
+					</div>
+				</header>
+
+				<form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					{/* Product ID (disabled) */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Product ID</label>
+						<input
+							type="text"
+							disabled
+							placeholder="Product ID"
+							className="w-full rounded-lg border border-gray-200 p-3 bg-gray-50 text-gray-700"
+							value={productId}
+							onChange={(e) => {
+								setProductId(e.target.value);
+							}}
+						/>
+					</div>
+
+					{/* Name */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Name</label>
+						<input
+							type="text"
+							placeholder="Name"
+							className="w-full rounded-lg border border-gray-200 p-3"
+							value={name}
+							onChange={(e) => {
+								setName(e.target.value);
+							}}
+						/>
+					</div>
+
+					{/* Alt Names */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Alt Names (comma separated)</label>
+						<input
+							type="text"
+							placeholder="Alt Names"
+							className="w-full rounded-lg border border-gray-200 p-3"
+							value={altNames}
+							onChange={(e) => {
+								setAltNames(e.target.value);
+							}}
+						/>
+					</div>
+
+					{/* Description */}
+					<div className="col-span-1 md:col-span-2">
+						<label className="block text-sm text-gray-600 mb-1">Description</label>
+						<textarea
+							placeholder="Description"
+							className="w-full rounded-lg border border-gray-200 p-3 min-h-[120px] resize-y"
+							value={description}
+							onChange={(e) => {
+								setDescription(e.target.value);
+							}}
+						/>
+					</div>
+
+					{/* Images */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Upload Images</label>
+						<input
+							type="file"
+							multiple
+							className="w-full rounded-lg border border-gray-200 p-2 bg-white"
+							onChange={(e) => {
+								setImages(e.target.files);
+							}}
+						/>
+						<p className="text-xs text-gray-400 mt-2">You can upload multiple images. Existing images will be kept unless you upload new ones.</p>
+					</div>
+
+					{/* Labelled Price */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Labelled Price</label>
+						<input
+							type="number"
+							placeholder="Labelled Price"
+							className="w-full rounded-lg border border-gray-200 p-3"
+							value={labelledPrice}
+							onChange={(e) => {
+								setLabelledPrice(e.target.value);
+							}}
+						/>
+					</div>
+
+					{/* Price */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Price</label>
+						<input
+							type="number"
+							placeholder="Price"
+							className="w-full rounded-lg border border-gray-200 p-3"
+							value={price}
+							onChange={(e) => {
+								setPrice(e.target.value);
+							}}
+						/>
+					</div>
+
+					{/* Stock */}
+					<div className="col-span-1">
+						<label className="block text-sm text-gray-600 mb-1">Stock</label>
+						<input
+							type="number"
+							placeholder="Stock"
+							className="w-full rounded-lg border border-gray-200 p-3"
+							value={stock}
+							onChange={(e) => {
+								setStock(e.target.value);
+							}}
+						/>
+					</div>
+				</form>
+
+				{/* Actions */}
+				<div className="mt-6 flex items-center justify-end gap-4">
+					<Link
+						to="/admin/products"
+						className="px-5 py-3 rounded-xl bg-red-500 text-white font-semibold hover:opacity-90 transition"
+					>
+						Cancel
+					</Link>
+					<button
+						className="px-6 py-3 rounded-xl bg-[#6a2c4b] text-white font-semibold hover:opacity-95 transition"
+						onClick={updateProduct}
+					>
+						Update Product
+					</button>
+				</div>
 			</div>
 		</div>
 	);

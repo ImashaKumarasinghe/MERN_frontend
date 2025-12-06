@@ -66,8 +66,8 @@ export default function AdminProductPage() {
                                     <th className="p-4 rounded-l-xl">Product ID</th>
                                     <th className="p-4">Name</th>
                                     <th className="p-4">Image</th>
-                                    <th className="p-4">Labelled Price</th>
-                                    <th className="p-4">Price</th>
+                                    <th className="p-4">Labelled Price (Rs)</th>
+                                    <th className="p-4">Price (Rs)</th>
                                     <th className="p-4">Stock</th>
                                     <th className="p-4">Status</th>
                                     <th className="p-4 rounded-r-xl text-center">Actions</th>
@@ -103,11 +103,11 @@ export default function AdminProductPage() {
                                         </td>
 
                                         <td className="p-4 text-[#6a2c4b] font-semibold text-lg">
-                                            ${product.labelledPrice || "0"}
+                                            Rs {product.labelledPrice || "0"}
                                         </td>
 
                                         <td className="p-4 text-[#2A1E28] font-bold text-lg">
-                                            ${product.price || "0"}
+                                            Rs {product.price || "0"}
                                         </td>
 
                                         <td className="p-4">
