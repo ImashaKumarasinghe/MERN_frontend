@@ -1,138 +1,323 @@
-import { useState } from "react";
+// Updated AdminOrdersPage with bolder fonts, improved color, increased modal width
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../../components/loading";
 import Modal from "react-modal";
+import toast from "react-hot-toast";
 
+if (typeof document !== "undefined") {
+  try {
+    Modal.setAppElement("#root");
+  } catch (e) {}
+}
 
 export default function AdminOrdersPage() {
-    const [orders, setOrders] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [activeOrder, setActiveOrder] = useState(-1);
-   
-    
-    useEffect(() => {
-        if (isLoading) {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                alert("Please login first");
-                return;
-            }
-            axios
-                .get(import.meta.env.VITE_BACKEND_URL + "/api/orders", {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                })
-                .then((res) => {
-                    const data = res.data;
-                    if (Array.isArray(data)) {
-                        setOrders(data);
-                    } else if (Array.isArray(data.orders)) {
-                        setOrders(data.orders);
-                    } else if (Array.isArray(data.data)) {
-                        setOrders(data.data);
-                    } else {
-                        // fallback to empty array
-                        setOrders([]);
-                    }
-                    setIsLoading(false);
-                })
-                .catch((e) => {
-                    alert(
-                        "Error fetching orders: " +
-                            (e.response?.data?.message || "Unknown error")
-                    );
-                    setIsLoading(false);
-                });
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeOrder, setActiveOrder] = useState(null);
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("Please login first");
+          setIsLoading(false);
+          return;
         }
-    }, [isLoading]);
 
-    return (
-        <div className="w-full font-[var(--font-main)] p-6">
-            <div className="max-w-screen-2xl mx-auto">
-                <div className="flex items-center justify-between mb-6">
-                    <div>
-                        <h1 className="text-4xl md:text-5xl font-semibold text-[#92487A] leading-tight">Orders</h1>
-                        <p className="text-sm md:text-base text-gray-500 mt-1">Overview of recent orders placed on the store</p>
-                    </div>
-                    <div className="text-right">
-                        <div className="text-xs md:text-sm text-gray-500">Total Orders</div>
-                        <div className="mt-1 text-2xl md:text-3xl font-bold text-[#432323]">{orders.length}</div>
-                    </div>
-                </div>
+        const res = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/orders",
+          {
+            headers: { Authorization: "Bearer " + token },
+          }
+        );
 
-                <div className="bg-white border border-[#EDD9E3] rounded-2xl shadow-sm overflow-hidden">
-                    {isLoading ? (
-                        <div className="p-8">
-                            <Loading />
-                        </div>
-                    ) : (
-                        <div className="overflow-x-auto"> <Modal
-                                isOpen={isModalOpen}
-                                onAfterOpen={(  ) => {} }
-                                onRequestClose={(  ) => setIsModalOpen(false)}
-                               
-                                contentLabel="Example Modal">
+        const data = res.data;
+        const arr =
+          Array.isArray(data) && data
+            ? data
+            : Array.isArray(data?.orders)
+            ? data.orders
+            : Array.isArray(data?.data)
+            ? data.data
+            : Array.isArray(data?.result)
+            ? data.result
+            : [];
 
-                                <div className="w-full h-full border 2 border-accent rounded-lg p-6 ">
-                                    {JSON.stringify(orders[activeOrder])}
+        setOrders(arr);
+      } catch (err) {
+        alert(
+          "Error fetching orders: " +
+            (err?.response?.data?.message || err.message || "Unknown error")
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-                                </div>
-                            </Modal>
+    loadOrders();
+  }, []);
 
-                            <table className="w-full min-w-[900px]">
-                                <thead className="bg-[#F9E6ED] text-[#7A4669]">
-                                    <tr>
-                                        <th className="text-left px-6 py-4 text-base md:text-lg font-medium">Order ID</th>
-                                        <th className="text-left px-6 py-4 text-base md:text-lg font-medium">Name</th>
-                                        <th className="text-left px-6 py-4 text-base md:text-lg font-medium">Email</th>
-                                        <th className="text-left px-6 py-4 text-base md:text-lg font-medium">Address</th>
-                                        <th className="text-left px-6 py-4 text-base md:text-lg font-medium">Phone</th>
-                                        <th className="text-right px-6 py-4 text-base md:text-lg font-medium">Total</th>
-                                        <th className="text-left px-6 py-4 text-base md:text-lg font-medium">Date</th>
-                                        <th className="text-center px-6 py-4 text-base md:text-lg font-medium">Status</th>
-                                    </tr>
-                                </thead>
+  const formatCurrency = (value) =>
+    (Number(value) || 0).toLocaleString("en-LK", {
+      style: "currency",
+      currency: "LKR",
+    });
 
-                                <tbody>
-                                    {orders.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={8} className="px-6 py-10 text-center text-gray-500 text-base">
-                                                No orders found.
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        orders.map((order, index) => (
-                                            <tr onClick={() => { setActiveOrder(index); setIsModalOpen(true); }} key={order._id || index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                                                <td className="px-6 py-4 text-base md:text-sm text-[#432323]">{order._id}</td>
-                                                <td className="px-6 py-4 text-base md:text-sm text-gray-700">{order.name}</td>
-                                                <td className="px-6 py-4 text-base md:text-sm text-gray-600">{order.email}</td>
-                                                <td className="px-6 py-4 text-base md:text-sm text-gray-700">{order.address}</td>
-                                                <td className="px-6 py-4 text-base md:text-sm text-gray-700">{order.phone}</td>
-                                                <td className="px-6 py-4 text-base md:text-sm text-right text-[#432323]">${(Number(order.total) || 0).toFixed(2)}</td>
-                                                <td className="px-6 py-4 text-base md:text-sm text-gray-600">{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "—"}</td>
-                                                <td className="px-6 py-4 text-center">
-                                                    <span className={`inline-block px-3 py-1 rounded-full text-sm md:text-base font-semibold ${
-                                                        order.status === "completed"
-                                                            ? "bg-green-100 text-green-800"
-                                                            : order.status === "pending"
-                                                            ? "bg-yellow-100 text-yellow-800"
-                                                            : "bg-gray-100 text-gray-800"
-                                                    }`}>
-                                                        {order.status ?? "—"}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
-                </div>
-            </div>
+  return (
+    <div className="w-full font-sans">
+      <div className="bg-white shadow-xl rounded-2xl p-10 border border-[#e6c4d3]">
+        <div className="flex justify-between items-center mb-10">
+          <h2 className="text-4xl font-bold text-[#6a2c4b] tracking-wide">
+            Order Details
+          </h2>
+          <div className="bg-[#f5d8e4] px-6 py-3 rounded-xl shadow text-[#6a2c4b] font-semibold text-xl">
+            Total Orders: {orders.length}
+          </div>
         </div>
-    );
+
+        {isLoading ? (
+          <div className="text-center py-10">
+            <div className="h-12 w-12 border-4 border-[#d18aa5] border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="text-[#6a2c4b] mt-4 text-lg font-medium">Loading orders…</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-[18px] border-separate border-spacing-y-3">
+              <thead>
+                <tr className="bg-[#f5d8e4] text-[#6a2c4b] text-lg font-semibold">
+                  <th className="p-4 rounded-l-xl">Order ID</th>
+                  <th className="p-4">Name</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Phone</th>
+                  <th className="p-4 text-right">Total</th>
+                  <th className="p-4">Date</th>
+                  <th className="p-4 rounded-r-xl text-center">Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {orders.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="py-6 text-center text-gray-600 bg-white rounded-xl shadow"
+                    >
+                      No orders found.
+                    </td>
+                  </tr>
+                ) : (
+                  orders.map((order, index) => (
+                    <tr
+                      key={order._id ?? index}
+                      onClick={() => {
+                        setActiveOrder(order);
+                        setIsModalOpen(true);
+                      }}
+                      className="bg-white shadow-md rounded-xl cursor-pointer hover:scale-[1.02] transition p-4"
+                    >
+                      <td className="p-4 text-[#2A1E28] font-bold text-lg">
+                        {order.orderId ?? order._id ?? `#${index + 1}`}
+                      </td>
+
+                      <td className="p-4 text-[#6a2c4b] font-semibold text-lg">
+                        {order.name ?? "—"}
+                      </td>
+
+                      <td className="p-4 text-gray-700 font-medium text-lg">
+                        {order.email ?? "—"}
+                      </td>
+
+                      <td className="p-4 text-[#2A1E28] font-medium text-lg">
+                        {order.phone ?? "—"}
+                      </td>
+
+                      <td className="p-4 text-right text-[#6a2c4b] font-bold text-lg">
+                        {formatCurrency(order.total)}
+                      </td>
+
+                      <td className="p-4 text-gray-700 font-medium text-lg">
+                        {order.date
+                          ? new Date(order.date).toLocaleDateString("en-GB")
+                          : order.createdAt
+                          ? new Date(order.createdAt).toLocaleDateString("en-GB")
+                          : "—"}
+                      </td>
+
+                      <td className="p-4 text-center">
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                            (order.status ?? "").toLowerCase() === "completed"
+                              ? "bg-green-200 text-green-900"
+                              : (order.status ?? "").toLowerCase() === "pending"
+                              ? "bg-yellow-200 text-yellow-900"
+                              : "bg-gray-200 text-gray-900"
+                          }`}
+                        >
+                          {((order.status ?? "—").charAt(0) || "").toUpperCase() +
+                            ((order.status ?? "—").slice(1) || "")}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* MODAL (Wider Size) */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        className="bg-white rounded-xl shadow-xl w-[65%] max-w-6xl h-auto p-6"
+        overlayClassName="fixed inset-0 bg-black/40 flex items-start justify-center z-50"
+      >
+        {activeOrder ? (
+          <div className="space-y-6 text-lg">
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="text-3xl font-bold text-[#6a2c4b]">Order Details</h2>
+                <p className="text-gray-600 mt-1 font-medium">
+                  {(activeOrder.orderId ?? activeOrder._id) || "—"}
+                </p>
+              </div>
+
+              <div className="text-right">
+                <div className="text-gray-600 text-sm font-semibold">Total</div>
+                <div className="text-[#6a2c4b] text-2xl font-bold">
+                  {formatCurrency(activeOrder.total)}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
+              <div className="space-y-2">
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Name:</span> {activeOrder.name}
+                </p>
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Email:</span> {activeOrder.email}
+                </p>
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Phone:</span> {activeOrder.phone}
+                </p>
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Address:</span> {activeOrder.address}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Status:</span>
+                  <span
+                    className={`ml-2 px-3 py-1 rounded text-sm font-bold ${
+                      (activeOrder.status ?? "").toLowerCase() === "completed"
+                        ? "bg-green-200 text-green-900"
+                        : (activeOrder.status ?? "").toLowerCase() === "pending"
+                        ? "bg-yellow-200 text-yellow-900"
+                        : "bg-gray-200 text-gray-900"
+                    }`}
+                  >
+                    {activeOrder.status}
+                  </span>
+                </p>
+
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Date:</span> {" "}
+                  {activeOrder.date
+                    ? new Date(activeOrder.date).toLocaleDateString("en-GB")
+                    : activeOrder.createdAt
+                    ? new Date(activeOrder.createdAt).toLocaleDateString("en-GB")
+                    : "—"}
+                </p>
+
+                <p>
+                  <span className="font-semibold text-[#6a2c4b]">Labelled Total:</span> {" "}
+                  {formatCurrency(activeOrder.labelledTotal)}
+                </p>
+              </div>
+            </div>
+
+            <h3 className="text-2xl font-bold text-[#6a2c4b] mt-6">Products</h3>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-lg">
+                <thead className="bg-[#6a2c4b] text-white">
+                  <tr>
+                    <th className="py-3 px-4">Image</th>
+                    <th className="py-3 px-4">Product</th>
+                    <th className="py-3 px-4">Price</th>
+                    <th className="py-3 px-4">Qty</th>
+                    <th className="py-3 px-4">Subtotal</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {(activeOrder.products || []).map((item, idx) => {
+                    const prod = item.productInfo || item.product || {};
+                    const price = Number(prod.price) || Number(item.price) || 0;
+                    const qty = Number(item.quantity) || 0;
+                    const subtotal = price * qty;
+                    const imgSrc = prod.images?.[0] || prod.image || "";
+
+                    return (
+                      <tr
+                        key={idx}
+                        className={idx % 2 === 0 ? "bg-[#f7edf2]" : "bg-gray-100"}
+                      >
+                        <td className="py-3 px-4">
+                          {imgSrc ? (
+                            <img
+                              src={imgSrc}
+                              className="w-16 h-16 rounded-xl object-cover shadow"
+                            />
+                          ) : (
+                            <div className="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center text-sm text-gray-500">
+                              No Image
+                            </div>
+                          )}
+                        </td>
+
+                        <td className="py-3 px-4 font-semibold text-[#6a2c4b] text-lg">
+                          {prod.name || item.name || "—"}
+                        </td>
+
+                        <td className="py-3 px-4 font-medium">{formatCurrency(price)}</td>
+
+                        <td className="py-3 px-4 font-medium">{qty}</td>
+
+                        <td className="py-3 px-4 font-bold text-[#6a2c4b]">
+                          {formatCurrency(subtotal)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="flex justify-end gap-4 mt-6">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-6 py-3 bg-[#6a2c4b] text-white rounded-xl font-semibold text-lg hover:opacity-90"
+              >
+                Close
+              </button>
+
+              <button
+                onClick={() => window.print()}
+                className="px-6 py-3 bg-[#8b4d6d] text-white rounded-xl font-semibold text-lg hover:opacity-90"
+              >
+                Print
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </Modal>
+    </div>
+  );
 }

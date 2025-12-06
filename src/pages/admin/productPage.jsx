@@ -87,7 +87,7 @@ export default function AdminProductPage() {
                             <tbody>
                                 {products.map((product, index) => (
                                     <tr
-                                       
+                                        onClick={(  ) => setIsModalOpen(true)}
                                         key={product._id || index}
                                         className="bg-white shadow-md rounded-xl"
                                     >
