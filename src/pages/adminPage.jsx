@@ -1,14 +1,25 @@
 import { Link, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 
 export default function AdminPage() {
     const navigate = useNavigate();
+    const location = useLocation();
+	const path = location.pathname;
 
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/login");
     };
+    function getClass(name) {
+		if (path.includes(name)) {
+			return "bg-accent text-white p-4";
+		} else {
+			return "text-accent p-4";
+		}
+	}
 
     return (
         <div className='w-full h-screen flex'>
@@ -17,16 +28,16 @@ export default function AdminPage() {
                 <h2 className='text-2xl font-bold mb-6 text-center'>Admin Panel</h2>
                 
                 {/* ✅ Removed Add Product button from here */}
-                <Link to="/admin/products" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
+                <Link  className={getClass("products")} to="/admin/products" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
                     📦 Products
                 </Link>
-                <Link to="/admin/users" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
+                <Link  className={getClass("users")} to="/admin/users" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
                     👥 Users
                 </Link>
-                <Link to="/admin/orders" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
+                <Link  className={getClass("orders")} to="/admin/orders" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
                     🛒 Orders
                 </Link>
-                <Link to="/admin/reviews" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
+                <Link  className={getClass("reviews")} to="/admin/reviews" className='py-2 px-4 hover:bg-gray-700 rounded mb-2'>
                     ⭐ Reviews
                 </Link>
                 
