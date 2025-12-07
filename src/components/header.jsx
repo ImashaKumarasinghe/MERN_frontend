@@ -1,12 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import UserData from "./userData";
 import { BsCart3 } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function Header() {
   const navigate = useNavigate();
   
   return (
     <header className="w-full h-[80px] shadow-2xl flex justify-center items-center relative px-4">
+      <GiHamburgerMenu className ="" />
       <img 
         src="/logo.png" 
         alt="Logo" 
