@@ -31,7 +31,7 @@ export default function ProductOverviewPage() {
 
 	return (
         <> {status == "success" && (
-            <div className="w-full min-h-screen flex flex-col">
+            <div className="w-full min-h-screen flex flex-col md:flex-row">
 			<Header />
 			{/* main area fills remaining height and is a horizontal flex container */}
 			<main className="flex-1 flex">
