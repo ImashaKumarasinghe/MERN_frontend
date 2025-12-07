@@ -173,7 +173,7 @@ export default function AdminOrdersPage() {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
-        className="bg-white rounded-xl shadow-xl w-[65%] max-w-6xl h-auto p-6"
+        className="bg-white rounded-xl shadow-xl w-[40%] max-w-6xl h-auto p-6 justify-center item-center"
         overlayClassName="fixed inset-0 bg-black/40 flex items-start justify-center z-50"
       >
         {activeOrder ? (
