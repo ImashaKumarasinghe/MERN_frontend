@@ -8,7 +8,7 @@ export default function Header() {
   
   return (
     <header className="w-full h-[80px] shadow-2xl flex justify-center items-center relative px-4">
-      <GiHamburgerMenu className ="h-full mx-2 text-3xl md:hidden" />
+      <GiHamburgerMenu className ="h-full mx-2 text-3xl md:hidden absolute left-4" />
 
       <img 
         src="/logo.png" 
@@ -35,7 +35,7 @@ export default function Header() {
         </Link>
       </div>
 
-      <div className="w-[80px] h-full flex justify-center items-center absolute right-4">
+      <div className="w-[80px] h-full hidden md:flex justify-center items-center absolute right-4">
         <Link to="/cart" className="text-[20px] font-bold mx-2 hover:text-blue-600 transition">
         <BsCart3 />
         </Link>
