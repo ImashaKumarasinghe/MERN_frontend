@@ -212,18 +212,18 @@ export default function AdminOrdersPage() {
 
               <div className="space-y-2">
                 <p>
-                  <span className="font-semibold text-[#6a2c4b]">Status:</span>
-                  <span
-                    className={`ml-2 px-3 py-1 rounded text-sm font-bold ${
-                      (activeOrder.status ?? "").toLowerCase() === "completed"
-                        ? "bg-green-200 text-green-900"
-                        : (activeOrder.status ?? "").toLowerCase() === "pending"
-                        ? "bg-yellow-200 text-yellow-900"
-                        : "bg-gray-200 text-gray-900"
-                    }`}
-                  >
-                    {activeOrder.status}
-                  </span>
+                  <span className="font-semibold">Status:</span>{" "}
+											<span
+												className={`font-bold ${
+													activeOrder.status === "pending"
+														? "text-yellow-500"
+														: activeOrder.status === "completed"
+														? "text-green-600"
+														: "text-red-500"
+												}`}
+											>
+												{activeOrder.status.toUpperCase()}
+											</span>
                 </p>
 
                 <p>
