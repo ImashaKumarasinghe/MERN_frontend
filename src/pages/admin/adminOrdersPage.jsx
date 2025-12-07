@@ -224,6 +224,44 @@ export default function AdminOrdersPage() {
 											>
 												{activeOrder.status.toUpperCase()}
 											</span>
+                      <select
+												onChange={async (e) => {
+													const updatedValue = e.target.value;
+													try {
+														const token = localStorage.getItem("token");
+														await axios.put(
+															import.meta.env.VITE_BACKEND_URL +
+																"/api/orders/" +
+																activeOrder.orderId +
+																"/" +
+																updatedValue,
+															{},
+															{
+																headers: {
+																	Authorization: "Bearer " + token,
+																},
+															}
+														);
+														
+														setIsLoading(true);
+														const updatedOrder = {...activeOrder};
+														updatedOrder.status = updatedValue;
+														setActiveOrder(updatedOrder);
+
+													} catch (e) {
+														toast.error("Error updating order status")
+														console.log(e)
+													}
+												}}
+											>
+												<option selected disabled>
+													Change status
+												</option>
+												<option value="pending">Pending</option>
+												<option value="completed">Completed</option>
+												<option value="cancelled">Cancelled</option>
+												<option value="returned">Returned</option>
+											</select>
                 </p>
 
                 <p>
