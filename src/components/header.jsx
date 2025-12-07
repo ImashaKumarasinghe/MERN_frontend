@@ -2,9 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import UserData from "./userData";
 import { BsCart3 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
   
   return (
     <header className="w-full h-[80px] shadow-2xl flex justify-center items-center relative px-4">
