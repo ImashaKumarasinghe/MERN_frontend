@@ -8,7 +8,8 @@ export default function Header() {
   
   return (
     <header className="w-full h-[80px] shadow-2xl flex justify-center items-center relative px-4">
-      <GiHamburgerMenu className ="h-full mx-2 text-3xl" />
+      <GiHamburgerMenu className ="h-full mx-2 text-3xl md:hidden" />
+
       <img 
         src="/logo.png" 
         alt="Logo" 
