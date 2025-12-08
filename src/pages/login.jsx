@@ -34,6 +34,9 @@ export default function LoginPage() {
       console.log("Login error:", error.response?.data);
     }
   }
+  function LoginWithGoogle() {
+    // Implement Google Login logic here
+  }
 
   return (
     <div className="w-full h-screen bg-[url('/up4.jpg')] bg-no-repeat bg-cover bg-center flex justify-center items-center">
@@ -62,9 +65,9 @@ export default function LoginPage() {
           >
             Login
           </button>
-          <button className="w-[300px] cursor-pointer h-[50px] flex justify-center items-center bg-[#7b9c92] rounded-[20px] my-[20px] text-[20px] font-bold text-white hover:bg-[#6a8b81] transition">  
-            <GrGoogle className="text-3xl text-[#de5246] cursor-pointer"  />
-            <span className="ml-2 text-[#de5246] font-semibold">Login with Google</span>
+          <button onClick={LoginWithGoogle} className="w-[300px] cursor-pointer h-[50px] flex justify-center items-center bg-[#7b9c92] rounded-[20px] my-[20px] text-[20px] font-bold text-white hover:bg-[#6a8b81] transition">  
+            <GrGoogle className="text-xl text-[#de5246] cursor-pointer"  />
+            <span className="ml-2 text-xl text-[#de5246] font-semibold">Login with Google</span>
           </button>
         </div>
       </div>
