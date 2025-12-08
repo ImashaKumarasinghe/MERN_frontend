@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { GrGoogle } from "react-icons/gr";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -60,6 +61,10 @@ export default function LoginPage() {
             className="w-[300px] cursor-pointer h-[50px] bg-[#7b9c92] rounded-[20px] my-[20px] text-[20px] font-bold text-white hover:bg-[#6a8b81] transition"
           >
             Login
+          </button>
+          <button className="w-[300px] cursor-pointer h-[50px] flex justify-center items-center bg-[#7b9c92] rounded-[20px] my-[20px] text-[20px] font-bold text-white hover:bg-[#6a8b81] transition">  
+            <GrGoogle className="text-3xl text-[#de5246] cursor-pointer"  />
+            <span className="ml-2 text-[#de5246] font-semibold">Login with Google</span>
           </button>
         </div>
       </div>
