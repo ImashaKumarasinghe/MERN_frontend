@@ -15,12 +15,13 @@ import AddProductPage from './pages/admin/addProductPage'
 import EditProductPage from './pages/admin/editProductPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
+
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
-    <GoogleOAuthProvider clientId="<your_client_id>">
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <BrowserRouter>
       <div>
         <Toaster position="top-right" />
