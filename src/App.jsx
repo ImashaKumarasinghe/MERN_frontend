@@ -13,6 +13,7 @@ import AdminProductPage from './pages/admin/productPage'
 import AdminOrdersPage from './pages/admin/adminOrdersPage'
 import AddProductPage from './pages/admin/addProductPage'
 import EditProductPage from './pages/admin/editProductPage'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast'
