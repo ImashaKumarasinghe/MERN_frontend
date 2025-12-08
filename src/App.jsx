@@ -19,6 +19,7 @@ import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
+    <GoogleOAuthProvider clientId="<your_client_id>">
     <BrowserRouter>
       <div>
         <Toaster position="top-right" />
@@ -51,6 +52,7 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+    </GoogleOAuthProvider>
   )
 }
 
