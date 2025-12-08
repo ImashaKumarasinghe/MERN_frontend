@@ -3,11 +3,33 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { GrGoogle } from "react-icons/gr";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); 
+
+  const googleLogin = useGoogleLogin({
+  onSuccess: (response) => {
+    const accessToken = response.access_token;
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login/google`, {
+        accessToken: accessToken, // ✅ match backend
+      })
+      .then((res) => {
+        toast.success("Google Login Successful! 🎉");
+        localStorage.setItem("token", res.data.token);
+        if (res.data.role === "admin") navigate("/admin/");
+        else navigate("/");
+      })
+      .catch((err) => {
+        console.error("Google login request failed:", err);
+        toast.error("Google login failed! ❌");
+      });
+  },
+});
+
 
   async function handleLogin() {
     console.log(email);
@@ -34,10 +56,7 @@ export default function LoginPage() {
       console.log("Login error:", error.response?.data);
     }
   }
-  function LoginWithGoogle() {
-    // Implement Google Login logic here
-  }
-
+  
   return (
     <div className="w-full h-screen bg-[url('/up4.jpg')] bg-no-repeat bg-cover bg-center flex justify-center items-center">
       <div className="w-[50%] h-full"></div>
@@ -65,7 +84,7 @@ export default function LoginPage() {
           >
             Login
           </button>
-          <button onClick={LoginWithGoogle} className="w-[300px] cursor-pointer h-[50px] flex justify-center items-center bg-[#7b9c92] rounded-[20px] my-[20px] text-[20px] font-bold text-white hover:bg-[#6a8b81] transition">  
+          <button onClick={googleLogin} className="w-[300px] cursor-pointer h-[50px] flex justify-center items-center bg-[#7b9c92] rounded-[20px] my-[20px] text-[20px] font-bold text-white hover:bg-[#6a8b81] transition">  
             <GrGoogle className="text-xl text-[#de5246] cursor-pointer"  />
             <span className="ml-2 text-xl text-[#de5246] font-semibold">Login with Google</span>
           </button>
