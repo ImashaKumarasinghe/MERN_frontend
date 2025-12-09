@@ -1,4 +1,6 @@
-import { useState } from "react";
+import axios from "axios"
+import { useState } from "react"
+import toast from "react-hot-toast"
 
 export default function ForgetPasswordPage() {
     const [otpSent, setotp] = useState(false)
