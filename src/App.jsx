@@ -35,10 +35,6 @@ function App() {
           
           {/* ✅ Client Routes */}
           <Route path="/products" element={<ProductPage />} />
-          <Route path="/about" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">About Page</h1></div>} />
-          <Route path="/contact" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Contact Page</h1></div>} />
-          <Route path="/search" element={<div className="w-full min-h-screen flex flex-col"><Header /><h1 className="text-3xl font-bold p-8">Search Page</h1></div>} />
-          <Route path="/overview/:Id" element={<ProductOverviewPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/search" element={<SearchProductPage />} />
