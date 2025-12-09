@@ -18,6 +18,21 @@ export default function ForgetPasswordPage() {
             console.error(error)
         })
     }
+    function verifyOtp(){
+        const otpInNumberFormat = parseInt(otp, 10);
+        axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/reset-password", {
+            email: email,
+            otp: otpInNumberFormat,
+            newPassword: newPassword,
+        }).then((response)=>{
+            toast.success("OTP verified successfully")
+            console.log(response.data)
+            // Here you can redirect to reset password page or show reset password form
+        }).catch((error)=>{
+            console.error(error)
+            toast.error("Invalid OTP")
+        })
+    }
   return (
      <div className="w-full h-screen flex justify-center items-center bg-[url('/login.jpg')] bg-center bg-cover">
             {
