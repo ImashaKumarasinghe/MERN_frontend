@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 export default function SearchProductPage() {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
         if (isLoading) {
@@ -36,12 +37,27 @@ export default function SearchProductPage() {
     }, [isLoading]);
 
     return (
-        <div className="w-full min-h-screen flex flex-col">
-            <Header />
-            <div className="w-full flex-1 p-8">
+    <> 
+        <Header />
+
+        <div className="w-full h-full flex flex-col items-center p-4">
+
+            {/* Search Bar */}
+            <div className="w-full flex justify-center mb-6">
+                <input
+                    type="text"
+                    placeholder="Search products..."
+                    className="w-full max-w-xl p-4 border border-gray-300 rounded-xl shadow-sm 
+                               focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+            </div>
+
+            <div className="w-full flex-1 p-6">
                 <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
-                
-                {isLoading ?  (
+
+                {isLoading ? (
                     <div className="w-full h-64 flex justify-center items-center">
                         <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
                     </div>
@@ -58,5 +74,6 @@ export default function SearchProductPage() {
                 )}
             </div>
         </div>
-    );
+    </>
+);
 }
