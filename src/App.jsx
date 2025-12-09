@@ -14,6 +14,7 @@ import AdminOrdersPage from './pages/admin/adminOrdersPage'
 import AddProductPage from './pages/admin/addProductPage'
 import EditProductPage from './pages/admin/editProductPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import ForgetPasswordPage from './pages/forgetPassword'
 
 
 import TestPage from './pages/testPage'
@@ -29,6 +30,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/forget" element={<ForgetPasswordPage />} />
           
           {/* ✅ Client Routes */}
           <Route path="/products" element={<ProductPage />} />
