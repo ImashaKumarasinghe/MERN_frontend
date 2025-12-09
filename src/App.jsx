@@ -15,6 +15,7 @@ import AddProductPage from './pages/admin/addProductPage'
 import EditProductPage from './pages/admin/editProductPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import ForgetPasswordPage from './pages/forgetPassword'
+import SearchProductPage from './pages/client/searchProducts'
 
 
 import TestPage from './pages/testPage'
@@ -40,6 +41,7 @@ function App() {
           <Route path="/overview/:Id" element={<ProductOverviewPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/search" element={<SearchProductPage />} />
           
           {/* ✅ Admin Routes - Nested */}
           <Route path="/admin" element={<AdminPage />}>
