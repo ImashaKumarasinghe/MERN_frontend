@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
+import Header from "../components/header"
 
 export default function ForgetPasswordPage() {
     const [otpSent, setotp] = useState(false)
@@ -36,6 +37,9 @@ export default function ForgetPasswordPage() {
         })
     }
   return (
+    <>
+    <Header />
+
      <div className="w-full h-screen flex justify-center items-center bg-[url('/login.jpg')] bg-center bg-cover">
             {
                 otpSent?
@@ -54,5 +58,6 @@ export default function ForgetPasswordPage() {
 
             }
         </div>
+    </>
   );
 }
