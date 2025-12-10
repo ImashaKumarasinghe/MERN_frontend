@@ -34,10 +34,12 @@ function App() {
           <Route path="/forget" element={<ForgetPasswordPage />} />
           
           {/* ✅ Client Routes */}
+          <Route path="/overview/:id" element={<ProductOverviewPage />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/search" element={<SearchProductPage />} />
+          
           
           {/* ✅ Admin Routes - Nested */}
           <Route path="/admin" element={<AdminPage />}>

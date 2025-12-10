@@ -17,7 +17,7 @@ export default function Header(){
             }/>
             <img onClick={()=>{
                 navigate("/")
-            }} src="/logo.png" alt="Logo" className="w-[80px] h-[80px] object-cover cursor-pointer"/>
+            }} src="/ishlogo.png" alt="Logo" className="w-[80px] h-[80px] object-cover cursor-pointer"/>
             <div className="w-[calc(100%-160px)] h-full hidden md:flex justify-center items-center">
                 <Link to="/" className=" text-[20px] font-bold mx-2">Home</Link>
                 <Link to="/products" className=" text-[20px] font-bold mx-2">Products</Link>
@@ -51,7 +51,7 @@ export default function Header(){
                             }} />
                             <img onClick={()=>{
                                 window.location.href = "/"
-                            }} src="/logo.png" alt="Logo" className="w-[80px] h-[80px] object-cover cursor-pointer"/>
+                            }} src="/ishlogo.png" alt="Logo" className="w-[80px] h-[80px] object-cover cursor-pointer"/>
 
                         </div>
                         <div className="w-full h-[calc(100%-80px)] flex flex-col items-center gap-2">
