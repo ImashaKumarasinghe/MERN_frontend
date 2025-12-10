@@ -1,8 +1,45 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"; 
+import axios from "axios";                   
+import { toast } from "react-hot-toast";
 
 export default function AdminDashboard() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+     const [status, setStatus] = useState("loading");//for auth check
+
+
+     useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        // No token → redirect to login
+        if (!token) {
+            setStatus("unauthenticated");
+            navigate("/login");
+            return;
+        }
+
+        axios
+            .get(import.meta.env.VITE_BACKEND_URL + "/api/users/", {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+                // If user is not admin → redirect home
+                if (response.data.role !== "admin") {
+                    setStatus("unauthorized");
+                    toast.error("You are not authorized to access admin panel");
+                    navigate("/");
+                } else {
+                    setStatus("authenticated");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                setStatus("unauthenticated");
+                toast.error("Session expired. Please login again.");
+                navigate("/login");
+            });
+    }, []);
 
     const isActive = (route) =>
         pathname.includes(route)
