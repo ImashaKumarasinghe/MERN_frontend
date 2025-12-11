@@ -10,7 +10,7 @@ export default function Contacts() {
             <div className="
                 w-full 
                 h-[75vh] 
-                bg-[url('/bg11.jpg')] 
+                bg-[url('/bg17.jpg')] 
                 bg-cover 
                 bg-center 
                 bg-no-repeat 
@@ -65,7 +65,12 @@ export default function Contacts() {
                     </div>
                 </div>
             </div>
+            {/* Footer */}
+            <div className="w-full py-10 text-center text-gray-600 font-[Poppins]">
+                © {new Date().getFullYear()} ISH Cosmetics — All Rights Reserved.
+            </div>
 
         </div>
+        
     );
 }
