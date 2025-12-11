@@ -10,7 +10,7 @@ export default function Contacts() {
             <div className="
                 w-full 
                 h-[75vh] 
-                bg-[url('/up4.jpg')] 
+                bg-[url('/bg11.jpg')] 
                 bg-cover 
                 bg-center 
                 bg-no-repeat 
