@@ -10,6 +10,8 @@ import CartPage from './pages/client/cart'
 import CheckoutPage from './pages/client/checkout'
 import Contacts from './pages/client/contacts'
 import About from './pages/client/about'
+import ReviewForm from './pages/client/reviewForm'
+import Reviews from './pages/client/reviews'
 import AdminPage from './pages/adminPage'
 import AdminProductPage from './pages/admin/productPage'
 import AdminOrdersPage from './pages/admin/adminOrdersPage'
@@ -43,6 +45,9 @@ function App() {
           <Route path="/search" element={<SearchProductPage />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/about" element={<About />} />
+          <Route path="/review" element={<ReviewForm />} />
+          <Route path="/reviews" element={<Reviews />} />
+
           
           
           {/* ✅ Admin Routes - Nested */}
