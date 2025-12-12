@@ -1,10 +1,19 @@
+/* stylelint-disable at-rule-no-unknown */
 @import "tailwindcss";
+/* stylelint-enable at-rule-no-unknown */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Theme Variables */
-@theme {
-    --color-primary: #FFC4C4;
-    --color-secondary: #92487A;
-    --color-accent: #432323;
-    --font-main: 'Playfair', serif;
+:root {
+  --color-primary: #FFC4C4;
+  --color-secondary: #92487A;
+  --color-accent: #432323;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair', serif;
 }
