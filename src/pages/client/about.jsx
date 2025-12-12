@@ -114,10 +114,7 @@ export default function About() {
                 </div>
             </div>
 
-            {/* Footer */}
-            <div className="w-full py-10 text-center text-gray-600 font-[Poppins]">
-                © {new Date().getFullYear()} ISH Cosmetics — All Rights Reserved.
-            </div>
+           
         </>
     );
 }

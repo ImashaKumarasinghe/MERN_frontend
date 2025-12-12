@@ -20,51 +20,56 @@ import EditProductPage from './pages/admin/editProductPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import ForgetPasswordPage from './pages/forgetPassword'
 import SearchProductPage from './pages/client/searchProducts'
-
-
+import Footer from './components/footer'
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-    <BrowserRouter>
-      <div>
-        <Toaster position="top-right" />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<RegisterPage />} />
-          <Route path="/forget" element={<ForgetPasswordPage />} />
-          
-          {/* ✅ Client Routes */}
-          <Route path="/overview/:id" element={<ProductOverviewPage />} />
-          <Route path="/products" element={<ProductPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/search" element={<SearchProductPage />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/review" element={<ReviewForm />} />
-          <Route path="/reviews" element={<Reviews />} />
+      <BrowserRouter>
+        <div className="flex flex-col min-h-screen">
+          {/* Global Toaster */}
+          <Toaster position="top-right" />
 
-          
-          
-          {/* ✅ Admin Routes - Nested */}
-          <Route path="/admin" element={<AdminPage />}>
-            <Route path="products" element={<AdminProductPage />} />
-            <Route path="add-product" element={<AddProductPage />} />
-            <Route path="edit-product" element={<EditProductPage />} />
-            <Route path="users" element={<h1>Users Page</h1>} />
-            <Route path="orders" element={<AdminOrdersPage />} />
-            <Route path="reviews" element={<h1>Reviews Page</h1>} />
-          </Route>
-          
-          <Route path="/test" element={<TestPage />} />
-          <Route path='/*' element={<h1>404 Not Found</h1>} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+          {/* Routes / Main Content */}
+          <div className="flex-1">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<RegisterPage />} />
+              <Route path="/forget" element={<ForgetPasswordPage />} />
+
+              {/* ✅ Client Routes */}
+              <Route path="/overview/:id" element={<ProductOverviewPage />} />
+              <Route path="/products" element={<ProductPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/search" element={<SearchProductPage />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/review" element={<ReviewForm />} />
+              <Route path="/reviews" element={<Reviews />} />
+
+              {/* ✅ Admin Routes - Nested */}
+              <Route path="/admin" element={<AdminPage />}>
+                <Route path="products" element={<AdminProductPage />} />
+                <Route path="add-product" element={<AddProductPage />} />
+                <Route path="edit-product" element={<EditProductPage />} />
+                <Route path="users" element={<h1>Users Page</h1>} />
+                <Route path="orders" element={<AdminOrdersPage />} />
+                <Route path="reviews" element={<h1>Reviews Page</h1>} />
+              </Route>
+
+              <Route path="/test" element={<TestPage />} />
+              <Route path="/*" element={<h1>404 Not Found</h1>} />
+            </Routes>
+          </div>
+
+          {/* ✅ Global Footer */}
+          <Footer />
+        </div>
+      </BrowserRouter>
     </GoogleOAuthProvider>
   )
 }
