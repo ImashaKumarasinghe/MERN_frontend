@@ -1,10 +1,11 @@
 import Header from "../../components/header"
 
 export default function Contacts() {
-    return (
+    return (<>
+        <Header />
         <div className="w-full min-h-screen bg-[#F9F5F7] font-[Playfair] text-[#432323]">
 
-            <Header />
+            
 
             {/* 3/4-Screen Section Using Background Image */}
             <div className="
@@ -71,6 +72,7 @@ export default function Contacts() {
             </div>
 
         </div>
+        </>
         
     );
 }
