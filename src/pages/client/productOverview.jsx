@@ -144,40 +144,82 @@ export default function ProductOverviewPage() {
       </div>
 
       {/* ---------------- REVIEW MESSAGE INPUT ---------------- */}
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="flex items-end gap-3 p-4 rounded-2xl border border-pink-200 shadow-[0_6px_20px_rgba(236,72,153,0.25)] bg-white">
-          
-          {/* Rating */}
-          <select
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            className="border rounded-xl px-3 py-2 text-sm"
-          >
-            {[5, 4, 3, 2, 1].map((r) => (
-              <option key={r} value={r}>
-                {"⭐".repeat(r)}
-              </option>
-            ))}
-          </select>
+<div className="max-w-4xl mx-auto px-6">
+  <div
+    className="
+      relative
+      p-4
+      rounded-2xl
+      border border-pink-200
+      shadow-[0_6px_20px_rgba(236,72,153,0.25)]
+      bg-white
+    "
+  >
+    {/* ⭐ Rating (TOP RIGHT) */}
+    <select
+      value={rating}
+      onChange={(e) => setRating(e.target.value)}
+      className="
+        absolute
+        top-3
+        right-3
+        border
+        rounded-lg
+        px-2
+        py-1
+        text-sm
+        bg-white
+      "
+    >
+      {[5, 4, 3, 2, 1].map((r) => (
+        <option key={r} value={r}>
+          {"⭐".repeat(r)}
+        </option>
+      ))}
+    </select>
 
-          {/* Message */}
-          <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Write your review..."
-            rows={2}
-            className="flex-1 resize-none border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-pink-300"
-          />
+    {/* 💬 Message */}
+    <textarea
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+      placeholder="Write your review..."
+      rows={3}
+      className="
+        w-full
+        resize-none
+        border
+        rounded-xl
+        p-4
+        pr-16
+        focus:outline-none
+        focus:ring-2
+        focus:ring-pink-300
+      "
+    />
 
-          {/* Send */}
-          <button
-            onClick={submitReview}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-[var(--color-accent)] text-white hover:scale-105 transition"
-          >
-            <Send size={18} />
-          </button>
-        </div>
-      </div>
+    {/* ➤ Send button (BOTTOM RIGHT) */}
+    <button
+      onClick={submitReview}
+      className="
+        absolute
+        bottom-4
+        right-4
+        w-10
+        h-10
+        flex
+        items-center
+        justify-center
+        rounded-full
+        bg-[var(--color-accent)]
+        text-white
+        hover:scale-105
+        transition
+      "
+    >
+      <Send size={18} />
+    </button>
+  </div>
+</div>
 
       {/* ---------------- REVIEW LIST ---------------- */}
       <div className="max-w-6xl mx-auto px-6 mt-10 flex flex-col gap-4">
