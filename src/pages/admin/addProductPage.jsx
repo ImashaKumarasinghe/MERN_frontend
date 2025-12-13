@@ -5,193 +5,133 @@ import mediaUpload from "../../utils/mediaUpload";
 import axios from "axios";
 
 export default function AddProductPage() {
-	/*
-    
-const productSchema = mongoose.Schema({
-	productId : {
-		type : String,
-		required : true,
-		unique : true
-	},
-	name : {
-		type : String,
-		required : true
-	},
-	altNames : [
-		{type : String}
-	],
-	description : {
-		type : String,
-		required : true
-	},
-	images : [
-		{type : String}
-	],
-	labelledPrice : {
-		type : Number,
-		required : true
-	},
-	price : {
-		type : Number,
-		required : true
-	},
-	stock : {
-		type : Number,
-		required : true
-	},
-	isAvailable : {
-		type : Boolean,
-		required : true,
-		default : true
-	},
-});
-    */
 	const [productId, setProductId] = useState("");
 	const [name, setName] = useState("");
 	const [altNames, setAltNames] = useState("");
 	const [description, setDescription] = useState("");
 	const [images, setImages] = useState([]);
-	const [labelledPrice, setLabelledPrice] = useState(0);
-	const [price, setPrice] = useState(0);
-	const [stock, setStock] = useState(0);
-    const navigate = useNavigate()
+	const [labelledPrice, setLabelledPrice] = useState("");
+	const [price, setPrice] = useState("");
+	const [stock, setStock] = useState("");
+	const navigate = useNavigate();
 
 	async function AddProduct() {
+		const token = localStorage.getItem("token");
+		if (!token) return toast.error("Please login first");
 
-        const token = localStorage.getItem("token")
-        if(token == null){
-            toast.error("Please login first")
-            return
-        }
+		if (images.length <= 0) return toast.error("Please select at least one image");
 
-		if (images.length <= 0) {
-			toast.error("Please select at least one image");
-			return;
-		}
+		const promisesArray = Array.from(images).map((img) => mediaUpload(img));
 
-		const promisesArray = [];
-
-		for (let i = 0; i < images.length; i++) {
-			promisesArray[i] = mediaUpload(images[i]);
-		}
 		try {
 			const imageUrls = await Promise.all(promisesArray);
-			console.log(imageUrls);
 
-            const altNamesArray = altNames.split(",")
+			const altNamesArray = altNames.split(",").map((n) => n.trim());
 
-            const product = {
-                productId : productId,
-                name : name,
-                altNames : altNamesArray,
-                description : description,
-                images : imageUrls,
-                labelledPrice : labelledPrice,
-                price : price,
-                stock : stock,
-            }
-            axios.post(import.meta.env.VITE_BACKEND_URL + "/api/products", product , {
-                headers : {
-                    "Authorization" : "Bearer "+token
-                }
-            }).then(() => {
-                toast.success("Product added successfully")
-                navigate("/admin/products")
-            }).catch((e) => {
-                toast.error(e.response.data.message)
-            })
+			const product = {
+				productId,
+				name,
+				altNames: altNamesArray,
+				description,
+				images: imageUrls,
+				labelledPrice: Number(labelledPrice),
+				price: Number(price),
+				stock: Number(stock),
+			};
 
+			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/products`, product, {
+				headers: { Authorization: "Bearer " + token },
+			});
+
+			toast.success("Product added successfully");
+			navigate("/admin/products");
 		} catch (e) {
-			console.log(e);
+			console.error(e);
+			toast.error(e.response?.data?.message || "Error adding product");
 		}
 	}
+
 	return (
-		<div className="w-full h-full flex flex-col justify-center items-center">
-			<input
-				type="text"
-				placeholder="Product ID"
-				className="input input-bordered w-full max-w-xs"
-				value={productId}
-				onChange={(e) => {
-					setProductId(e.target.value);
-				}}
-			/>
-			<input
-				type="text"
-				placeholder="Name"
-				className="input input-bordered w-full max-w-xs"
-				value={name}
-				onChange={(e) => {
-					setName(e.target.value);
-				}}
-			/>
-			<input
-				type="text"
-				placeholder="Alt Names"
-				className="input input-bordered w-full max-w-xs"
-				value={altNames}
-				onChange={(e) => {
-					setAltNames(e.target.value);
-				}}
-			/>
-			<input
-				type="text"
-				placeholder="Description"
-				className="input input-bordered w-full max-w-xs"
-				value={description}
-				onChange={(e) => {
-					setDescription(e.target.value);
-				}}
-			/>
-			<input
-				type="file"
-				placeholder="Images"
-				multiple
-				className="input input-bordered w-full max-w-xs"
-				onChange={(e) => {
-					setImages(e.target.files);
-				}}
-			/>
-			<input
-				type="number"
-				placeholder="Labelled Price"
-				className="input input-bordered w-full max-w-xs"
-				value={labelledPrice}
-				onChange={(e) => {
-					setLabelledPrice(e.target.value);
-				}}
-			/>
-			<input
-				type="number"
-				placeholder="Price"
-				className="input input-bordered w-full max-w-xs"
-				value={price}
-				onChange={(e) => {
-					setPrice(e.target.value);
-				}}
-			/>
-			<input
-				type="number"
-				placeholder="Stock"
-				className="input input-bordered w-full max-w-xs"
-				value={stock}
-				onChange={(e) => {
-					setStock(e.target.value);
-				}}
-			/>
-			<div className="w-full flex justify-center flex-row items-center mt-4">
-				<Link
-					to="/admin/products"
-					className="bg-red-500 text-white font-bold py-2 px-4 rounded mr-4"
-				>
-					Cancel
-				</Link>
-				<button
-					className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-					onClick={AddProduct}
-				>
-					Add Product
-				</button>
+		<div className="min-h-screen w-full flex flex-col items-center bg-gray-50 py-12 px-4">
+			<h1 className="text-3xl font-bold text-[var(--color-accent)] mb-8">Add New Product</h1>
+
+			<div className="w-full max-w-xl flex flex-col gap-4">
+				{/* Basic Fields */}
+				<input
+					type="text"
+					placeholder="Enter Product ID"
+					className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+					value={productId}
+					onChange={(e) => setProductId(e.target.value)}
+				/>
+				<input
+					type="text"
+					placeholder="Enter Product Name"
+					className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+				/>
+				<input
+					type="text"
+					placeholder="Enter Alternate Names (comma separated)"
+					className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+					value={altNames}
+					onChange={(e) => setAltNames(e.target.value)}
+				/>
+				<input
+					type="text"
+					placeholder="Enter Product Description"
+					className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				/>
+				<input
+					type="file"
+					multiple
+					className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+					onChange={(e) => setImages(e.target.files)}
+				/>
+
+				{/* Price & Stock Fields */}
+				<div className="flex gap-4">
+					<input
+						type="number"
+						placeholder="Labelled Price (Rs)"
+						className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] appearance-none"
+						value={labelledPrice}
+						onChange={(e) => setLabelledPrice(e.target.value)}
+					/>
+					<input
+						type="number"
+						placeholder="Price (Rs)"
+						className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] appearance-none"
+						value={price}
+						onChange={(e) => setPrice(e.target.value)}
+					/>
+					<input
+						type="number"
+						placeholder="Stock Quantity"
+						className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] appearance-none"
+						value={stock}
+						onChange={(e) => setStock(e.target.value)}
+					/>
+				</div>
+
+				{/* Buttons */}
+				<div className="flex justify-center gap-4 mt-4">
+					<Link
+						to="/admin/products"
+						className="bg-red-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-red-600 transition-colors"
+					>
+						Cancel
+					</Link>
+					<button
+						className="bg-[var(--color-accent)] text-white font-bold py-3 px-6 rounded-xl hover:bg-[var(--color-secondary)] transition-colors"
+						onClick={AddProduct}
+					>
+						Add Product
+					</button>
+				</div>
 			</div>
 		</div>
 	);
