@@ -113,17 +113,7 @@ export default function AdminDashboard() {
                         🛒 Orders
                     </Link>
 
-                    <Link
-                        to="/admin/reviews"
-                        className={`
-                            px-4 py-2 rounded-xl
-                            transition-all duration-300
-                            hover:bg-[#F8D4E2] hover:text-[#4B2A3A] hover:shadow-md
-                            ${isActive("reviews")}
-                        `}
-                    >
-                        ⭐ Reviews
-                    </Link>
+                    
                 </nav>
 
                 <button

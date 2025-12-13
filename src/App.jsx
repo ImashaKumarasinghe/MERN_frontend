@@ -17,6 +17,7 @@ import AdminProductPage from './pages/admin/productPage'
 import AdminOrdersPage from './pages/admin/adminOrdersPage'
 import AddProductPage from './pages/admin/addProductPage'
 import EditProductPage from './pages/admin/editProductPage'
+import UsersPage from './pages/admin/usersPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import ForgetPasswordPage from './pages/forgetPassword'
 import SearchProductPage from './pages/client/searchProducts'
@@ -56,9 +57,10 @@ function App() {
                 <Route path="products" element={<AdminProductPage />} />
                 <Route path="add-product" element={<AddProductPage />} />
                 <Route path="edit-product" element={<EditProductPage />} />
-                <Route path="users" element={<h1>Users Page</h1>} />
+                <Route path="users" element={<UsersPage />} />
                 <Route path="orders" element={<AdminOrdersPage />} />
                 <Route path="reviews" element={<h1>Reviews Page</h1>} />
+
               </Route>
 
               <Route path="/test" element={<TestPage />} />
