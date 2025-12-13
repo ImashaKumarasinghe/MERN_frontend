@@ -3,7 +3,14 @@ import { useState, useEffect } from "react";
 
 function HomePage() {
   const images = [
+    
+    
+   
     "bg2.jpg",
+    
+     "25.jpg",
+    "27.jpg",
+    "26.jpg",
     "bg20.jpg",
     "bg11.jpg"
   ];
