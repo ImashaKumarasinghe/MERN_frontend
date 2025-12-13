@@ -216,17 +216,73 @@ export default function ProductOverviewPage() {
             </form>
 
             {/* Review List */}
-            <div className="flex flex-col gap-4 max-w-2xl mx-auto mt-6">
-              {reviews.length === 0 && <p className="text-gray-500 text-center">No reviews yet.</p>}
-              {reviews.map((r) => (
-                <div key={r._id} className="p-4 border rounded-lg shadow hover:shadow-lg transition-all duration-300">
-                  <p className="font-semibold">{r.name}</p>
-                  <p className="text-yellow-500">{'⭐'.repeat(r.rating)}</p>
-                  <p className="mt-1 text-gray-700">{r.comment}</p>
-                  <p className="text-sm text-gray-400 mt-2">{new Date(r.createdAt).toLocaleDateString()}</p>
-                </div>
-              ))}
-            </div>
+            {/* Review List */}
+<div className="flex flex-col gap-4 max-w-5xl mx-auto mt-8">
+  {reviews.length === 0 && (
+    <p className="text-gray-500 text-center">No reviews yet.</p>
+  )}
+
+  {reviews.map((r) => (
+    <div
+      key={r._id}
+      className="
+        w-full
+        flex
+        items-center
+        gap-4
+        p-4
+        rounded-2xl
+        border
+        border-pink-200
+        bg-white
+        shadow-[0_6px_20px_rgba(236,72,153,0.15)]
+        hover:shadow-[0_10px_30px_rgba(236,72,153,0.25)]
+        transition-all
+        duration-300
+      "
+    >
+      {/* LEFT: Product Image */}
+      <div className="w-[80px] h-[80px] flex-shrink-0">
+        <img
+          src={product.images?.[0]}
+          alt={product.name}
+          className="w-full h-full object-cover rounded-xl"
+        />
+      </div>
+
+      {/* LEFT: Product Name */}
+      <div className="hidden md:block w-[180px]">
+        <p className="text-sm font-semibold text-gray-700 line-clamp-2">
+          {product.name}
+        </p>
+      </div>
+
+      {/* RIGHT CONTENT */}
+      <div className="flex-1 flex flex-col items-end text-right gap-1">
+        {/* Name */}
+        <p className="font-semibold text-[var(--color-accent)]">
+          {r.name}
+        </p>
+
+        {/* Stars */}
+        <p className="text-yellow-500 text-sm">
+          {"⭐".repeat(r.rating)}
+        </p>
+
+        {/* Review Text */}
+        <p className="text-gray-700 text-sm max-w-xl">
+          {r.comment}
+        </p>
+
+        {/* Date */}
+        <p className="text-xs text-gray-400">
+          {new Date(r.createdAt).toLocaleDateString()}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+
           </div>
         </div>
       )}
