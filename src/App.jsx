@@ -24,6 +24,7 @@ import SearchProductPage from './pages/client/searchProducts'
 import Footer from './components/footer'
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast'
+import ChatBot from './components/ChatBot'
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
               <Route path="/*" element={<h1>404 Not Found</h1>} />
             </Routes>
           </div>
+          <ChatBot />
 
           {/* ✅ Global Footer */}
           <Footer />
