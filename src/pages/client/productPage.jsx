@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../../components/productCard";
 import Header from "../../components/header";
 import toast from "react-hot-toast";
+import SearchProductPage from "./searchProducts";
 
 export default function ProductPage() {
     const [products, setProducts] = useState([]);
@@ -37,7 +38,9 @@ export default function ProductPage() {
 
     return (
         <div className="w-full min-h-screen flex flex-col">
-            <Header />
+            <Header />     
+              <SearchProductPage />
+
             <div className="w-full flex-1 p-8">
                 <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
                 
