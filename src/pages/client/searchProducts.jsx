@@ -3,7 +3,7 @@ import { useState } from "react";
 import ProductCard from "../../components/productCard";
 import Loading from "../../components/loading";
 import toast from "react-hot-toast";
-import Header from "../../components/header";
+
 
 
 export default function SearchProductPage() {
@@ -13,7 +13,7 @@ export default function SearchProductPage() {
 
 	return (
          <>
-        <Header />
+       
       
 		<div className="w-full h-full flex flex-col items-center p-4">
 
