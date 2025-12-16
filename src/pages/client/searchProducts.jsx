@@ -49,7 +49,7 @@ export default function SearchProductPage() {
 			<div className="w-full h-full flex flex-row flex-wrap justify-center items-center">
 				{query.length == 0 ? (
 					<h1 className="text-2xl text-secondary font-semibold">
-						Please enter a search query
+						
 					</h1>
 				) : (
 					<>
